@@ -1,0 +1,7 @@
+/application/cache/*
+/application/config/parameters.php
+/application/logs/*
+/application/storage/*
+/logs/*
+/public_html/assets/static/*
+./idea/*

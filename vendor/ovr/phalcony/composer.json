@@ -1,0 +1,34 @@
+{
+    "name": "ovr/phalcony",
+    "description": "Library for expansion the base functional of Phalcon framework.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Phalcony\\": "src"
+        }
+    },
+    "require": {
+        "php": "~5.3"
+    },
+    "require-dev": {
+        "satooshi/php-coveralls": "0.6.1",
+        "squizlabs/php_codesniffer": "1.5.2",
+        "phpunit/phpunit": "4.0.*@dev"
+    },
+    "keywords": [
+        "framework",
+        "phalcon"
+    ],
+    "authors": [
+        {
+            "name": "Patsura Dmitry",
+            "email": "zaets28rus@gmail.com"
+        }
+    ],
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.2-dev"
+        }
+    }
+}

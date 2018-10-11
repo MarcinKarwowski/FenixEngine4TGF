@@ -1,0 +1,1 @@
+<h3>Wybrana akcja nie może zostać wykonana.</h3>
