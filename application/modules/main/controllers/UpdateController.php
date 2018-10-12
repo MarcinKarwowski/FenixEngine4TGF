@@ -107,12 +107,12 @@ class UpdateController extends ControllerBase
 
                 return $this->response->redirect('');
             }
-            $this->addToZipDir(BASE_PATH . '/update/database/', $zip);
-            $this->addToZipDir(BASE_PATH . '/library/', $zip);
+            $this->addToZipDir(BASE_PATH . DIRECTORY_SEPARATOR . 'update/database/', $zip);
+            $this->addToZipDir(BASE_PATH . DIRECTORY_SEPARATOR . 'library/', $zip);
             $this->addToZipDir(BASE_PATH . DIRECTORY_SEPARATOR . 'application/modules/admin/', $zip);
             $this->addToZipDir(BASE_PATH . DIRECTORY_SEPARATOR . 'application/modules/main/', $zip);
             $this->addToZipDir(BASE_PATH . DIRECTORY_SEPARATOR . 'application/templates/', $zip);
-            $this->addToZipDir(BASE_PATH . DIRECTORY_SEPARATOR . 'public_html/assets/', $zip);
+            $this->addToZipDir(BASE_PATH . DIRECTORY_SEPARATOR . 'assets/', $zip);
 
             $zip->close();
 

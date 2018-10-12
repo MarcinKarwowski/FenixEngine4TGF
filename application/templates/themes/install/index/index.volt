@@ -86,7 +86,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-xs-3" for="dbuser">Folder public_html/assets/static/avatars</label>
+                <label class="control-label col-xs-3" for="dbuser">Folder assets/static/avatars</label>
                 <div class="col-xs-9">
                     <div class="form-control" disabled><?php
            if (substr(sprintf('%o', fileperms($avatars)), -4) == '0777') echo '<span style="color: green;">Zapis możliwy</span>';

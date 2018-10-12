@@ -3,5 +3,5 @@
 /application/logs/*
 /application/storage/*
 /logs/*
-/public_html/assets/static/*
+/assets/static/*
 ./idea/*
