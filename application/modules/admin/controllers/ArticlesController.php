@@ -22,9 +22,11 @@ class ArticlesController extends ControllerBase
         $this->view->modalTitle = $this->translate[ 'articles-edit' ];
 
         $article = Articles::findFirst(["id = ?0", "bind" => [$params]]);
-
-        $objToArray = $article->toArray();
-        $objToArray['textdata']['text'] = $article->textdata->text;
+        $objToArray = [];
+        if ($article) {
+            $objToArray = $article->toArray();
+            $objToArray['textdata']['text'] = $article->textdata->text;
+        }
 
         $this->view->obj = $objToArray;
     }

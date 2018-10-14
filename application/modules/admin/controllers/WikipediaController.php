@@ -22,9 +22,11 @@ class WikipediaController extends ControllerBase
         $this->view->modalTitle = $this->translate[ 'articles-edit' ];
 
         $article = Wikipedia::findFirst(["id = ?0", "bind" => [$params]]);
-
-        $objToArray = $article->toArray();
-        $objToArray['wikitext']['text'] = $article->wikitext->text;
+        $objToArray = [];
+        if ($article) {
+            $objToArray = $article->toArray();
+            $objToArray['wikitext']['text'] = $article->wikitext->text;
+        }
 
         $this->view->obj = $objToArray;
     }
