@@ -33,6 +33,12 @@ class AdminMenu extends \Phalcon\Mvc\User\Component
                 'mico'  => 'medkit',
                 'ico'   => 'info-circle'
             ],
+            'menu-update'             => [
+                'link'  => '/admin/check-update',
+                'group' => 'menu-system_menu',
+                'mico'  => 'medkit',
+                'ico'   => 'info-circle'
+            ],
             'menu-articles'         => [
                 'link'  => '/admin/articles',
                 'group' => 'menu-system_content',
