@@ -73,6 +73,17 @@
 
         </div>
     </div>
+    <h3>{{ t['configuration-layout'] }}</h3>
+    <div class="form-group">
+        <div class="col-md-12">
+            <div class="input-group">
+                                        <span class="input-group-addon"><span
+                                                    class="glyphicon glyphicon-circle"></span> {{ t['configuration-template'] }}</span>
+                {{ forms.get('mainconfigure').render('template', ['class': 'form-control', 'placeholder': t['configuration-template']]) }}
+            </div>
+
+        </div>
+    </div>
     <h3>{{ t['configuration-emailconf'] }}</h3>
     <div class="form-group">
         <div class="col-md-12">

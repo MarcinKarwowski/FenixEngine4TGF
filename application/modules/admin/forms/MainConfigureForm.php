@@ -84,6 +84,19 @@ class MainConfigureForm extends Form
         ));
         $this->add($publicUrl);
 
+        // template
+        $template = new Select("template", array('default' => $this -> translate['configuration-default_template']), array(
+            'using' => array('id', 'name'),
+            'value' => $this -> config -> game -> template
+        ));
+        $template->setLabel($this -> translate['configuration-template']);
+        $template->addValidators(array(
+            new PresenceOf(array(
+                'message' => $this -> translate['form-field_required']
+            ))
+        ));
+        $this->add($template);
+
         // register is off/on
         $registerOff = new Select("registeroff", array('true' => $this -> translate['yes'], 'false' => $this -> translate['no']), array(
             'using' => array('id', 'name'),

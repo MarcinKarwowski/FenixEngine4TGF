@@ -47,6 +47,9 @@ return array(
     // configuration form
     'configuration-game_title' => 'Tytuł gry',
     'configuration-game_description' => 'Opis gry',
+    'configuration-layout' => 'Wygląd strony',
+    'configuration-template' => 'Podstawowy wygląd strony',
+    'configuration-default_template' => 'Domyślny szablon',
     'configuration-game_keywords' => 'Słowa kluczowe',
     'configuration-game_timetostart' => 'Data startu gry',
     'configuration-game_keywords_desc' => 'Słowa kluczowe oddzielone przecinkami',
