@@ -4,6 +4,7 @@ namespace App\Service;
 use Phalcon\Mvc\User\Component;
 use Swift_Message as Message;
 use Swift_SmtpTransport as Smtp;
+use Swift_SendmailTransport as Sendmail;
 use Phalcon\Mvc\View;
 
 /**
@@ -66,6 +67,9 @@ class Mail extends Component
                 )
                     ->setUsername($mailSettings->smtp->username)
                     ->setPassword($mailSettings->smtp->password);
+            } else {
+                // Sendmail
+                $this->transport = new Sendmail('/usr/sbin/sendmail -bs');
             }
 
             // Create the Mailer using your created Transport
