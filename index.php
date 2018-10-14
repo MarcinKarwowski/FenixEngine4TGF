@@ -3,7 +3,7 @@
 define('MICROTIME', microtime());
 // session fix
 ini_set('session.save_handler', 'files');
-// ini_set('opcache.enable', false);
+ini_set('opcache.enable', false);
 
 // dev - comment when end of dev
 // putenv('APPLICATION_ENV=development');

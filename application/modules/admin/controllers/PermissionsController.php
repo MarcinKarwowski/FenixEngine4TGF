@@ -26,7 +26,7 @@ class PermissionsController extends ControllerBase
         $this -> view -> pageDesc = $this -> translate['perm-text_desc'];
 
         // get all permissions
-        $this -> view -> permissions = $this->modelsManager->executeQuery("SELECT p.users_id, ANY_VALUE(p.id), u.name, u.email, u.id as uid FROM Main\Models\Permissions AS p LEFT JOIN Main\Models\Users AS u ON u.id=p.users_id GROUP BY p.users_id");
+        $this -> view -> permissions = $this->modelsManager->executeQuery("SELECT p.users_id, p.id, u.name, u.email, u.id as uid FROM Main\Models\Permissions AS p LEFT JOIN Main\Models\Users AS u ON u.id=p.users_id GROUP BY p.users_id");
         $this -> view -> cpermissions = $this -> permissions;
     }
 

@@ -32,7 +32,7 @@ class MessagesController extends ControllerBase
         if (empty($page)) $page = 1;
 
         $builder = $this->modelsManager->createBuilder()
-            ->columns(array('MAX(Messages.id) AS mid', 'MAX(Messages.date) AS date', 'Messages.topic', 'ANY_VALUE(Messages.readed)', 'Sender.*'))
+            ->columns(array('MAX(Messages.id) AS mid', 'MAX(Messages.date) AS date', 'Messages.topic', 'Messages.readed', 'Sender.*'))
             ->from(array('Messages' => 'Main\Models\Messages'))
             ->leftjoin('Main\Models\Characters', 'Messages.sender_id = Sender.id', 'Sender')
             ->where('Messages.character_id = :charID:', array('charID' => $this->auth->getIdentity()['activeChar']))
