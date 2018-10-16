@@ -72,10 +72,9 @@ class ArticlesController extends ControllerBase
                 }
                 if ($strMsg != '') $this->flash->error($strMsg);
             }
-            $this->response->redirect('admin/articles');
             $this->view->disable();
 
-            return true;
+            return $this->response->redirect('admin/articles');
         }
 
         $this -> view -> pageHeader = $this -> translate['articles-text'];

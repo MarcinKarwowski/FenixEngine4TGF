@@ -339,7 +339,6 @@ $sql[] = [
 $sql[] = [
     'check' => "SELECT * FROM information_schema.tables WHERE table_schema = '".$parameters['db']['schema']."' AND table_name = 'articles_text' LIMIT 1;",
     'make' => "CREATE TABLE IF NOT EXISTS `articles_text` (
-  `id` int(11) NOT NULL,
   `articles_id` int(11) NOT NULL,
   `text` mediumtext
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;"
@@ -1052,6 +1051,10 @@ $sql[] = [
 $sql[] = [
     'check' => "SHOW INDEX FROM wikipedia_text WHERE Column_name = 'articles_id';",
     'make' => "ALTER TABLE `wikipedia_text` ADD UNIQUE KEY `articles_id` (`articles_id`);"
+];
+$sql[] = [
+    'check' => "SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME = 'wikipedia_desc_articles'",
+    'make' => "ALTER TABLE `articles_text` ADD CONSTRAINT `wikipedia_desc_articles` FOREIGN KEY (`articles_id`) REFERENCES `wikipedia` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;"
 ];
 
 return $sql;
