@@ -24,7 +24,6 @@ use Game\Models\Items;
 use Game\Models\ItemsCat;
 use Game\Models\Locations;
 use Game\Models\Relations;
-use Game\Shema\LoadDB;
 use Main\Models\Chats;
 use Main\Models\Users;
 use Main\Models\Characters;

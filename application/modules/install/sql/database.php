@@ -1054,7 +1054,7 @@ $sql[] = [
 ];
 $sql[] = [
     'check' => "SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME = 'wikipedia_desc_articles'",
-    'make' => "ALTER TABLE `articles_text` ADD CONSTRAINT `wikipedia_desc_articles` FOREIGN KEY (`articles_id`) REFERENCES `wikipedia` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;"
+    'make' => "ALTER TABLE `wikipedia_text` ADD CONSTRAINT `wikipedia_desc_articles` FOREIGN KEY (`articles_id`) REFERENCES `wikipedia` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;"
 ];
 
 return $sql;

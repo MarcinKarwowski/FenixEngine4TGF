@@ -4,11 +4,7 @@ namespace Admin\Controller;
 
 use App\Service\File,
     App\Service\Config,
-    Admin\Forms\MainConfigureForm,
-    Game\Shema\LoadDB,
-    Main\Models\Characters,
-    App\Service\Update;
-
+    Admin\Forms\MainConfigureForm;
 use Composer\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\StreamOutput;
