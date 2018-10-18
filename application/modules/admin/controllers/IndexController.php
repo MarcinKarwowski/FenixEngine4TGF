@@ -162,8 +162,7 @@ class IndexController extends ControllerBase
         // template
         $this->view->pageHeader = $this->translate['menu-update'];
         $this->view->pageDesc = '';
-
-        $this->view->new_version = trim(file_get_contents('https://raw.githubusercontent.com/ThoranRion/FenixEngine4TGF/master/VERSION.md'));
+        $this->view->new_version = trim(file_get_contents('https://raw.githubusercontent.com/ThoranRion/FenixEngine4TGF/master/VERSION.md'.'?'.mt_rand()));
         if (version_compare($this->view->new_version, $this->config->game->engineVer, '>')) {
             $this->view->showUpdate = true;
         }
@@ -212,7 +211,7 @@ class IndexController extends ControllerBase
         File::delete(APPLICATION_PATH . '/update/FenixEngine4TGF-master/', true);
 
         Config::save(
-            array('game' => array('engineVer' => trim(file_get_contents('https://raw.githubusercontent.com/ThoranRion/FenixEngine4TGF/master/VERSION.md'))))
+            array('game' => array('engineVer' => trim(file_get_contents('https://raw.githubusercontent.com/ThoranRion/FenixEngine4TGF/master/VERSION.md'.'?'.mt_rand()))))
         );
 
         $this->flash->success($this->translate['update-game_done']);
