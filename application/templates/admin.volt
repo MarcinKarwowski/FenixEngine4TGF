@@ -65,6 +65,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Navbar Right Menu -->
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
+                    {% if showUpdate %}
+                    <li>
+                        <a href="/admin/check-update">Nowa wersja silnika {{ new_version }}</a>
+                    </li>
+                    {% endif %}
                     <!-- User Account Menu -->
                     <li class="dropdown user user-menu">
                         <!-- Menu Toggle Button -->

@@ -110,6 +110,7 @@ return array(
     'update-wrong_unzip' => 'Nie udało się rozpakować aktualizacji',
     'update-engine_done' => 'Zaktualizowano silnik do najnowszej wersji',
     'update-game_done' => 'Zaktualizowano grę do najnowszej wersji',
+    'update-no_need' => 'Brak nowej wersji silnika',
     // users
     'users-list' => 'Lista użytkowników',
     'users-name' => 'Nick',

@@ -54,6 +54,10 @@ class ControllerBase extends Controller
 
         $userData = $this->auth -> getUser();
         $this->view->user = array('registerdate' => date('d-m-Y', $userData -> registerdate));
+        $this->view->new_version = trim(file_get_contents('https://raw.githubusercontent.com/ThoranRion/FenixEngine4TGF/master/VERSION.md'));
+        if (version_compare($this->view->new_version, $this->config->game->engineVer, '>')) {
+            $this->view->showUpdate = true;
+        }
     }
 
     /*
