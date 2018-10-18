@@ -48,6 +48,14 @@
     {% endif %}
     {{ javascript_include("templates/game/default/script.js") }}
 
+    {% if config.game.template_text_color|length == 6 %}
+        <style>
+            .chat-message {
+                color: #{{ config.game.template_text_color }} !important;
+            }
+        </style>
+    {% endif %}
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

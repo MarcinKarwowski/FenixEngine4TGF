@@ -96,6 +96,8 @@ class IndexController extends ControllerBase
                         'registerOff' => ($this->request->getPost('registeroff') == 'true' ? true : false),
                         'GAIdentificator' => $this->request->getPost('ga'),
                         'custom' => htmlentities($this->request->getPost('custom')),
+                        'template' => htmlentities($this->request->getPost('template')),
+                        'template_text_color' => htmlentities($this->request->getPost('template_text_color'))
                     ),
                         'mail' => array(
                             'fromName' => $this->request->getPost('emailName'),

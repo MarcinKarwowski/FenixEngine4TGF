@@ -11,6 +11,7 @@ return array(
         'registerOff' => true,
         'GAIdentificator' => '',
         'template' => 'default',
+        'template_text_color' => null,
         'params' =>
             array(
                 'charactersAmount' => 3,

@@ -35,7 +35,7 @@
                             <i class="fa fa-times candel"></i>
                         {% endif %}
                     </div>
-                    <div>{{ comment.text }}</div>
+                    <div class="chat-message">{{ comment.text }}</div>
                 </div>
             {% endfor %}
         </div>

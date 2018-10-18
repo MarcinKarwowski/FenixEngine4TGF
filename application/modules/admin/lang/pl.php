@@ -36,6 +36,7 @@ return array(
     'form-field_toolong' => 'Wpisany tekst ":field" jest za długi',
     'form-field_tooschort' => 'Wpisany tekst ":field" jest za krótki',
     'form-field_integer_required' => 'Wpisz liczbę',
+    'form-field_alphanum_required' => 'Dozwolone są tylko litery i cyfry',
     // configuration
     'configuration-first-chose-game' => 'Zanim przejdziesz do konfiguracji wybierz silnik gry',
     'configuration-desc' => 'Teraz musisz skonfigurować grę aby tego dokonać wypełnij poniższy formularz',
@@ -49,6 +50,8 @@ return array(
     'configuration-game_description' => 'Opis gry',
     'configuration-layout' => 'Wygląd strony',
     'configuration-template' => 'Podstawowy wygląd strony',
+    'configuration-template_text_color' => 'Podstawowy kolor tekstu w sesji',
+    'configuration-template_text_color_desc' => 'Kolor musi być w formacie hex czyli sześć znaków np. ababab. Jeśli chcesz usunąć kolor usuń zawartość pola.',
     'configuration-default_template' => 'Domyślny szablon',
     'configuration-game_keywords' => 'Słowa kluczowe',
     'configuration-game_timetostart' => 'Data startu gry',

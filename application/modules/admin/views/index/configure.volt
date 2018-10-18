@@ -84,6 +84,17 @@
 
         </div>
     </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            <div class="input-group">
+                <div class="input-group-addon" data-toggle="tooltip" data-placement="right" title="{{ t['configuration-template_text_color_desc'] }}"><i class="fa fa-question-circle"></i></div>
+                                        <span class="input-group-addon"><span
+                                                    class="glyphicon glyphicon-circle"></span> {{ t['configuration-template_text_color'] }}</span>
+                {{ forms.get('mainconfigure').render('template_text_color', ['value': config.game.template_text_color, 'maxlength': 6, 'class': 'form-control', 'placeholder': t['configuration-template_text_color']]) }}
+            </div>
+
+        </div>
+    </div>
     <h3>{{ t['configuration-emailconf'] }}</h3>
     <div class="form-group">
         <div class="col-md-12">

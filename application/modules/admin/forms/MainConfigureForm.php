@@ -9,6 +9,7 @@ use Phalcon\Forms\Element\Password;
 use Phalcon\Forms\Element\Submit;
 use Phalcon\Forms\Element\Check;
 use Phalcon\Forms\Element\Select;
+use Phalcon\Validation\Validator\Regex;
 use Phalcon\Validation\Validator\PresenceOf;
 use Phalcon\Validation\Validator\Email;
 use Phalcon\Validation\Validator\Identical;
@@ -96,6 +97,22 @@ class MainConfigureForm extends Form
             ))
         ));
         $this->add($template);
+
+        $template_text_color = new Text("template_text_color");
+        $template_text_color->setLabel($this -> translate['configuration-template_text_color']);
+        $template_text_color->addValidators(array(
+            new StringLength(array(
+                'max' => 6,
+                'min' => 6,
+                'messageMaximum' => $this -> translate['form-field_toolong'],
+                'messageMinimum' => $this -> translate['form-field_tooschort']
+            )),
+            new Regex(array(
+                'message' => $this -> translate['form-field_alphanum_required'],
+                'pattern' => '/[a-zA-Z0-9]+/'
+            ))
+        ));
+        $this->add($template_text_color);
 
         // register is off/on
         $registerOff = new Select("registeroff", array('true' => $this -> translate['yes'], 'false' => $this -> translate['no']), array(
