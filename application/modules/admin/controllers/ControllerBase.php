@@ -38,12 +38,6 @@ class ControllerBase extends Controller
             return true;
         }
 
-        // admin menu
-        if (is_file(APPLICATION_PATH.'/modules/game/adminMenu.php'))
-        {
-            AdminMenu::set(include APPLICATION_PATH.'/modules/game/adminMenu.php');
-        }
-
         // set layout and partials
         $this->view->setLayoutsDir('../../../templates/layouts/');
         $this->view->setPartialsDir('');
