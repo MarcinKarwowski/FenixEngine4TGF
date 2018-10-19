@@ -195,7 +195,11 @@ class IndexController extends ControllerBase
         }
 
         // clear model cache
-        File::delete(APPLICATION_PATH . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . 'metadata' . DIRECTORY_SEPARATOR);
+        File::delete(APPLICATION_PATH . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR);
+        if (!is_dir(APPLICATION_PATH . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . 'metadata')) {
+            mkdir(APPLICATION_PATH . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . 'metadata');
+            chmod(APPLICATION_PATH . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . 'metadata', 0777);
+        }
 
         // Update database
         $sqlupdate = include(APPLICATION_PATH . '/update/FenixEngine4TGF-master/application/modules/install/sql/database.php');
