@@ -112,6 +112,7 @@ return array(
     'update-engine_done' => 'Zaktualizowano silnik do najnowszej wersji',
     'update-game_done' => 'Zaktualizowano grę do najnowszej wersji',
     'update-no_need' => 'Brak nowej wersji silnika',
+    'update-info' => 'Uwaga! Aktualizacja nadpisze wszystkie podstawowe pliki gry. Jeśli były w nich dokonywane jakiekolwiek zmiany zostaną one nadpisane!!',
     // users
     'users-list' => 'Lista użytkowników',
     'users-name' => 'Nick',
