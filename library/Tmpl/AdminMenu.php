@@ -67,10 +67,6 @@ class AdminMenu extends \Phalcon\Mvc\User\Component
                 'link' => '/admin/users',
                 'ico'  => 'users'
             ],
-            'characters-list'            => [
-                'link' => '/admin/characters',
-                'ico'  => 'users'
-            ],
             'menu-notify'           => [
                 'link' => '/admin/notify',
                 'ico'  => 'sticky-note-o'
