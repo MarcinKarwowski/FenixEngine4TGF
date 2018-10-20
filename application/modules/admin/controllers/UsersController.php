@@ -119,7 +119,7 @@ class UsersController extends ControllerBase
         $this->forms->set('editcharacter', $form);
     }
 
-    public function deleteCharAction($params = null)
+    public function deletecharAction($params = null)
     {
         $character = Characters::findFirst(["id = ?0", "bind" => [$params]]);
         if (isset($character->id)) {
@@ -127,6 +127,6 @@ class UsersController extends ControllerBase
             $character->delete();
         }
 
-        return $this->response->redirect('admin/characters');
+        return $this->response->redirect('/admin/users/show/'.$character->users_id);
     }
 }

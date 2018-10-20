@@ -82,7 +82,7 @@
                     </td>
                     <th>{{ data.level }}</th>
                     <th>{{ data.gold }}</th>
-                    <td><a href="/admin/characters/delete/{{ data.id }}" class="btn btn-danger btn-sm"
+                    <td><a href="/admin/users/deletechar/{{ data.id }}" class="btn btn-danger btn-sm"
                            type="button">{{ t['delete'] }}</a></td>
                 </tr>
                 <?php } ?>
