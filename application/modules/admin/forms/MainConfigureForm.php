@@ -101,16 +101,22 @@ class MainConfigureForm extends Form
         $template_text_color = new Text("template_text_color");
         $template_text_color->setLabel($this -> translate['configuration-template_text_color']);
         $template_text_color->addValidators(array(
-            new StringLength(array(
-                'max' => 6,
-                'min' => 6,
-                'messageMaximum' => $this -> translate['form-field_toolong'],
-                'messageMinimum' => $this -> translate['form-field_tooschort']
-            )),
-            new Regex(array(
-                'message' => $this -> translate['form-field_alphanum_required'],
-                'pattern' => '/[a-zA-Z0-9]+/'
-            ))
+            new StringLength(
+                [
+                    'max' => 6,
+                    'min' => 6,
+                    'messageMaximum' => $this->translate['form-field_toolong'],
+                    'messageMinimum' => $this->translate['form-field_tooschort'],
+                    'allowEmpty' => true,
+                ]
+            ),
+            new Regex(
+                [
+                    'message' => $this->translate['form-field_alphanum_required'],
+                    'pattern' => '/[a-zA-Z0-9]+/',
+                    'allowEmpty' => true,
+                ]
+            )
         ));
         $this->add($template_text_color);
 
