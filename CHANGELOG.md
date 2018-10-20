@@ -1,3 +1,6 @@
+## Wersja 1.1.11
+1. W PA ustawienie domyślnego koloru fontu może nie zawierać wartości
+
 ## Wersja 1.1.10
 1. W PA dodany został komunikat ostrzegający o konsekwencjach aktualizacji oraz Changelog
 
