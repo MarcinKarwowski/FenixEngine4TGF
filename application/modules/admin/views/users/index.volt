@@ -29,7 +29,7 @@
                 ?>
                 <tr>
                     <th>{{ data.id }}</th>
-                    <td style="font-weight: bold;">{{ data.name }}</td>
+                    <td style="font-weight: bold;"><a href="/admin/users/show/{{ data.id }}">{{ data.name }}</a></td>
                     <td>{{ data.email }}</td>
                     <td>
                         {% if data.active  == 1%}

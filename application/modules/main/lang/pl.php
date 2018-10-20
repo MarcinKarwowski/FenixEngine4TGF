@@ -19,6 +19,7 @@ return array(
     'chose' => 'Wybierz',
     'all' => 'Wszystkie',
     'character' => 'Postać',
+    'back' => 'Wróć',
     'news' => 'Newsy',
     'log-in' => 'Zaloguj się',
     'log-out' => 'Wyloguj się',

@@ -54,6 +54,7 @@ class ProfileController extends ControllerBase
         $this->view->avatarPath = $char->getAvatar();
         $this->view->name = $char->name;
         $this->view->users_id = $char->users_id;
+        $this->view->user = $char->Users->name;
         $this->view->id = $char->id;
         $this->view->status = $char->status;
         $this->view->level = $char -> level;

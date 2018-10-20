@@ -9,7 +9,9 @@
                                 class="fa fa-chevron-circle-left"></i></a> {{ name }} [{{ users_id }}] <a
                             href="/game/profile/next/{{ charid }}/2" style="float: right;"><i
                                 class="fa fa-chevron-circle-right"></i></a></div>
-
+                <div class="profile_special">
+                    <div class="special_label">{{ t['profile-users'] }}</div>{{ user }}
+                </div>
                 {% for special in specials %}
                     <div class="profile_special">
                         <div class="special_label">{{ special['label'] }}</div>{{ special['value'] }}{% if special['level'] != 0 %}: {{ special['level'] }}{% endif %}

@@ -57,6 +57,7 @@ return array(
     'charcreator-chose_something' => 'Musisz wybrać jedną z opcji',
     // profile //
     'profile-char_nagl' => 'Postać',
+    'profile-users' => 'Użytkownik',
     'profile-char_bio' => 'Karta postaci',
     'profile-no_char' => 'Wybrana postać nie istnieje',
     'profile-char_stats' => 'Cechy Postaci',
