@@ -255,6 +255,7 @@ div.sceditor-toolbar {
     width: 100%;
     min-height: 400px;
     position: relative;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 #creator_backtolobby {

@@ -21,10 +21,10 @@
         </div>
         <div class="profile_additions">
             <div class="additions_menu">
-                <div show="statistics">Statystyki</div>
-                <div show="equip">Ekwipunek</div>
-                <div show="magic">Czary/Skile</div>
-                <div show="works">Zdarzenia</div>
+                <div show="statistics">{{ t['profile-stats'] }}</div>
+                <div show="equip">{{ t['profile-equipment'] }}</div>
+                <div show="magic">{{ t['profile-spells'] }}</div>
+                <div show="works">{{ t['profile-events'] }}</div>
             </div>
             <div id="statistics" class="addition_tabs">
                 <div style="float: left; width: 49%; text-align: center;">
@@ -52,9 +52,9 @@
                 {% endif %}
             </div>
             <div id="equip" class="addition_tabs" style="display: none;">
-                <h1>Ekwipunek</h1>
+                <h2>{{ t['profile-equipment'] }}</h2>
                 {% if equipment|length == 0 %}
-                    <div style="text-align: center;">Brak przedmiotów</div>
+                    <div style="text-align: center;">{{ t['profile-no_equipment'] }}</div>
                 {% else %}
                     {{ equipment }}
                 {% endif %}
@@ -75,9 +75,9 @@
                     </div>
             </div>
             <div id="magic" class="addition_tabs" style="display: none;">
-                <h1>Czary/Skile</h1>
+                <h2>{{ t['profile-spells'] }}</h2>
                 {% if spells|length == 0 %}
-                    <div style="text-align: center;">Brak czarów/skili</div>
+                    <div style="text-align: center;">{{ t['profile-no_spells'] }}</div>
                 {% else %}
                     {{ spells }}
                 {% endif %}
@@ -98,9 +98,9 @@
                     </div>
             </div>
             <div id="works" class="addition_tabs" style="display: none;">
-                <h1>Zdarzenia</h1>
+                <h2>{{ t['profile-events'] }}</h2>
                   {% if events|length == 0 %}
-                      <div style="text-align: center;">Brak zdarzeń</div>
+                      <div style="text-align: center;">{{ t['profile-no_events'] }}</div>
                   {% else %}
                       {{ events }}
                   {% endif %}
