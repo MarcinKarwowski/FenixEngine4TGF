@@ -44,12 +44,7 @@ class MainConfigureForm extends Form
 
         // Custom code
         $custom = new TextArea('custom');
-        $custom->setLabel($this -> translate['configuration-game_description']);
-        $custom->addValidators(array(
-            new PresenceOf(array(
-                'message' => $this -> translate['form-field_required']
-            ))
-        ));
+        $custom->setLabel($this -> translate['configuration-custom_code']);
         $this->add($custom);
 
         // counter template
@@ -74,7 +69,7 @@ class MainConfigureForm extends Form
 
         // Game publicUrl
         $publicUrl = new Text('url');
-        $publicUrl->setLabel($this -> translate['configuration-game_keywords']);
+        $publicUrl->setLabel($this -> translate['configuration-game_url']);
         $publicUrl->addValidators(array(
             new PresenceOf(array(
                 'message' => $this -> translate['form-field_required']
@@ -125,7 +120,7 @@ class MainConfigureForm extends Form
             'using' => array('id', 'name'),
             'value' => ($this -> config -> game -> registerOff ? 'true' : 'false')
         ));
-        $registerOff->setLabel($this -> translate['configuration-game_keywords']);
+        $registerOff->setLabel($this -> translate['configuration-register_off']);
         $registerOff->addValidators(array(
             new PresenceOf(array(
                 'message' => $this -> translate['form-field_required']
@@ -140,7 +135,7 @@ class MainConfigureForm extends Form
 
         // Email sender name
         $emailName = new Text('emailName');
-        $emailName->setLabel($this -> translate['configuration-game_title']);
+        $emailName->setLabel($this -> translate['configuration-email_sender']);
         $emailName->addValidators(array(
             new PresenceOf(array(
                 'message' => $this -> translate['form-field_required']
@@ -150,7 +145,7 @@ class MainConfigureForm extends Form
 
         // Email data
         $email = new Text('email');
-        $email->setLabel($this -> translate['configuration-game_title']);
+        $email->setLabel($this -> translate['configuration-email']);
         $email->addValidators(array(
             new PresenceOf(array(
                 'message' => $this -> translate['form-field_required']
@@ -194,12 +189,12 @@ class MainConfigureForm extends Form
 
         // Email SMTP server user
         $emailServerUser = new Text('emailServerUser');
-        $emailServerUser->setLabel($this -> translate['configuration-smtp_server']);
+        $emailServerUser->setLabel($this -> translate['configuration-smtp_username']);
         $this->add($emailServerUser);
 
         // Email SMTP server password
         $emailServerPass = new Password('emailServerPass');
-        $emailServerPass->setLabel($this -> translate['configuration-smtp_server']);
+        $emailServerPass->setLabel($this -> translate['configuration-smtp_password']);
         $this->add($emailServerPass);
 
         // CSRF
@@ -216,6 +211,36 @@ class MainConfigureForm extends Form
         $this->add(new Submit($this -> translate['save'], array(
             'class' => 'btn btn-success'
         )));
+    }
+
+    /**
+     * Show rendered form field html
+     * @param $name
+     */
+    public function renderDecorated($name, $attributes = null)
+    {
+        $element  = $this->get($name);
+        $element->setAttributes($attributes);
+        $element->setAttribute('aria-describedby', 'form-'.$element->getName());
+
+        // Get any generated messages for the current element
+        $messages = $this->getMessagesFor(
+            $element->getName()
+        );
+
+        echo '<div class="form-group '.(count($messages) > 0 ?  'has-error' : '').'"><div class="col-md-12"><div class="input-group">';
+        echo '<span class="input-group-addon"><span class="glyphicon glyphicon-circle"></span>'.$element->getLabel().'</span>';
+        if (isset($attributes['tooltip'])) echo '<div class="input-group-addon" data-toggle="tooltip" data-placement="right" title="'.$attributes['tooltip'].'"><i class="fa fa-question-circle"></i></div>';
+        echo $element;
+        echo '</div>';
+        if (count($messages)) {
+            echo '<span id="form-'.$element->getName().'" class="help-block">';
+            foreach ($messages as $message) {
+                echo $message.'<br />';
+            }
+            echo '</span>';
+        }
+        echo '</div></div>';
     }
 
     /**

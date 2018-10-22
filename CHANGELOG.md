@@ -1,3 +1,7 @@
+## Wersja 1.1.12
+1. Modyfikacja formularza konfiguracji gry aby wyświetlał informacje o błędach w czytelniejszy sposób
+2. Uniemożliwienie zamknięcia modala w panelu poprzez kliknięcie poza jego obrys
+
 ## Wersja 1.1.11
 1. W PA ustawienie domyślnego koloru fontu może nie zawierać wartości
 
