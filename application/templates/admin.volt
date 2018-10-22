@@ -191,7 +191,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </div><!-- ./wrapper -->
 
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" data-backdrop="">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
