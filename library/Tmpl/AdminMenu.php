@@ -27,6 +27,10 @@ class AdminMenu extends \Phalcon\Mvc\User\Component
                 'link' => '/admin/configure',
                 'ico' => 'cogs'
             ],
+            'menu-template'           => [
+                'link' => '/admin/template',
+                'ico' => 'cogs'
+            ],
             'menu-info'             => [
                 'link'  => '/admin/info',
                 'group' => 'menu-system_menu',

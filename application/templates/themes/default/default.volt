@@ -48,13 +48,18 @@
     {% endif %}
     {{ javascript_include("templates/game/default/script.js") }}
 
-    {% if config.game.template_text_color|length == 6 %}
-        <style>
-            .chat-message {
-                color: #{{ config.game.template_text_color }} !important;
-            }
-        </style>
-    {% endif %}
+    <style>
+        {% if config.game.template_text_color|length == 6 %}
+        .chat-message {
+            color: # {{ config.game.template_text_color }} !important;
+        }
+        {% endif %}
+        {% if config.game.template_bg|length > 6 %}
+        .wrapper {
+            background: rgba(0, 0, 0, 0) url({{ config.game.template_bg }}) no-repeat scroll top center;
+        }
+        {% endif %}
+    </style>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

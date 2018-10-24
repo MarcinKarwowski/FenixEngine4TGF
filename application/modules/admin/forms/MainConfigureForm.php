@@ -80,41 +80,6 @@ class MainConfigureForm extends Form
         ));
         $this->add($publicUrl);
 
-        // template
-        $template = new Select("template", array('default' => $this -> translate['configuration-default_template']), array(
-            'using' => array('id', 'name'),
-            'value' => $this -> config -> game -> template
-        ));
-        $template->setLabel($this -> translate['configuration-template']);
-        $template->addValidators(array(
-            new PresenceOf(array(
-                'message' => $this -> translate['form-field_required']
-            ))
-        ));
-        $this->add($template);
-
-        $template_text_color = new Text("template_text_color");
-        $template_text_color->setLabel($this -> translate['configuration-template_text_color']);
-        $template_text_color->addValidators(array(
-            new StringLength(
-                [
-                    'max' => 6,
-                    'min' => 6,
-                    'messageMaximum' => $this->translate['form-field_toolong'],
-                    'messageMinimum' => $this->translate['form-field_tooschort'],
-                    'allowEmpty' => true,
-                ]
-            ),
-            new Regex(
-                [
-                    'message' => $this->translate['form-field_alphanum_required'],
-                    'pattern' => '/[a-zA-Z0-9]+/',
-                    'allowEmpty' => true,
-                ]
-            )
-        ));
-        $this->add($template_text_color);
-
         // register is off/on
         $registerOff = new Select("registeroff", array('true' => $this -> translate['yes'], 'false' => $this -> translate['no']), array(
             'using' => array('id', 'name'),

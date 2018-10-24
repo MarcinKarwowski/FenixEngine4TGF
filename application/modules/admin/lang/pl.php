@@ -6,6 +6,7 @@ return array(
     'menu-header' => 'GŁÓWNE MENU',
     'menu-dashboard' => 'Pulpit',
     'menu-config' => 'Konfiguracja silnika',
+    'menu-template' => 'Wygląd gry',
     'menu-info' => 'Informacje o systemie',
     'menu-update' => 'Aktualizacja',
     'menu-reset' => 'Usuń grę',
@@ -69,6 +70,10 @@ return array(
     'configuration-smtp_username' => 'Użytkownik',
     'configuration-smtp_password' => 'Hasło',
     'configuration-level_off' => 'Wyłączyć poziom?',
+    // Template
+    'template-info' => 'Wygląd gry',
+    'template-header' => 'Wgraj nagłówek strony (jpg, png, gif)',
+    'template-bg_success' => 'Poprawnie wgrano nagłówek strony',
     // system info
     'info-desc' => 'Informacje na temat systemów gry oraz serwera ',
     'info-more_desc' => 'W razie problemów z grą tutaj można poszukać przyczyn',

@@ -19,6 +19,14 @@
     {{ stylesheet_link("scripts/jquery.alerts/jquery.alerts.css") }}
     {{ stylesheet_link("scripts/jquery.ui/jquery.ui.min.css") }}
 
+    <style>
+        {% if config.game.template_bg|length > 6 %}
+        .wrapper {
+            background: rgba(0, 0, 0, 0) url({{ config.game.template_bg }}) no-repeat scroll top center;
+        }
+        {% endif %}
+    </style>
+
     {{ javascript_include("scripts/jquery-2.1.1.min.js") }}
     {{ javascript_include("scripts/jquery.ui/jquery-ui.min.js") }}
     {{ javascript_include("scripts/jquery.transit.min.js") }}

@@ -11,10 +11,7 @@
     {{ forms.get('mainconfigure').renderDecorated('url', ['value': config.game.baseUri, 'class': 'form-control', 'maxlength': 50]) }}
     {{ forms.get('mainconfigure').renderDecorated('registeroff', ['value': config.game.registerOff, 'class': 'form-control']) }}
     {{ forms.get('mainconfigure').renderDecorated('ga', ['value': config.game.GAIdentificator, 'class': 'form-control', 'maxlength': 50]) }}
-    <h3>{{ t['configuration-layout'] }}</h3>
-    {{ forms.get('mainconfigure').renderDecorated('template', ['value': config.game.template, 'class': 'form-control']) }}
-    {{ forms.get('mainconfigure').renderDecorated('template_text_color', ['value': config.game.template_text_color, 'class': 'form-control', 'maxlength': 6, 'tooltip': t['configuration-template_text_color_desc']]) }}
-    <h3>{{ t['configuration-emailconf'] }}</h3>
+     <h3>{{ t['configuration-emailconf'] }}</h3>
     {{ forms.get('mainconfigure').renderDecorated('emailName', ['value': config.mail.fromName, 'class': 'form-control', 'maxlength': 50]) }}
     {{ forms.get('mainconfigure').renderDecorated('email', ['value': config.mail.fromEmail, 'class': 'form-control', 'maxlength': 50]) }}
     {{ forms.get('mainconfigure').renderDecorated('emailServerType', ['value': config.mail.serverType, 'class': 'form-control', 'maxlength': 50]) }}
@@ -24,8 +21,6 @@
     {{ forms.get('mainconfigure').renderDecorated('emailServerSecurity', ['value': config.mail.smtp.security, 'class': 'form-control']) }}
     {{ forms.get('mainconfigure').renderDecorated('emailServerUser', ['value': config.mail.smtp.username, 'class': 'form-control', 'maxlength': 50]) }}
     {{ forms.get('mainconfigure').renderDecorated('emailServerPass', ['value': config.mail.smtp.password, 'class': 'form-control', 'maxlength': 50]) }}
-    <h3>{{ t['configuration-custom_el'] }}</h3>
-    {{ forms.get('mainconfigure').renderDecorated('custom', ['value': config.game.custom, 'class': 'form-control', 'maxlength': 1000]) }}
 
     <!-- Button -->
     <div class="form-group">
