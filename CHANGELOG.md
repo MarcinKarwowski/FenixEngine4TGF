@@ -1,3 +1,7 @@
+## Wersja 1.1.14
+1. Opcje wyglądu strony zostały wydzielone do odrębnej podstrony w panelu
+2. Dodano została opcja pozwalająca wgrać własny nagłowek strony
+
 ## Wersja 1.1.12
 1. Modyfikacja formularza konfiguracji gry aby wyświetlał informacje o błędach w czytelniejszy sposób
 2. Uniemożliwienie zamknięcia modala w panelu poprzez kliknięcie poza jego obrys
