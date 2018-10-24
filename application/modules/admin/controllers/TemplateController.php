@@ -78,6 +78,10 @@ class TemplateController extends ControllerBase
                 $newFileName = md5(uniqid(rand(), true)) . '.' . $file->getExtension();
                 $file->moveTo(PUBLIC_PATH . $this->config->url->staticBaseUri . 'static/' . $newFileName);
 
+                // remove old file
+                if (is_file(PUBLIC_PATH.$this->config->game->template_bg)){
+                    unlink(PUBLIC_PATH.$this->config->game->template_bg);
+                }
                 // save config file
                 Config::save(
                     array('game' => array(

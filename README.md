@@ -24,3 +24,7 @@ W razie problemów zajrzyj na [forum supportu](https://hexengine.pl/community/fe
 Wersja demo znajduje się pod adresem [demo.gildiatgf.pl](http://demo.gildiatgf.pl/)
 
 Własną wersję można założyć na stronie [Gildii TGF](http://gildiatgf.pl/)
+
+### Miejsce gdzie można wgrać własne grafiki
+
+(Galeria)[http://tgfimage.rocks/]
