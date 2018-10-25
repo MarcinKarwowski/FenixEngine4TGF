@@ -42,11 +42,6 @@ class MainConfigureForm extends Form
         ));
         $this->add($description);
 
-        // Custom code
-        $custom = new TextArea('custom');
-        $custom->setLabel($this -> translate['configuration-custom_code']);
-        $this->add($custom);
-
         // counter template
         $description = new Text('starttime');
         $description->setLabel($this -> translate['configuration-game_timetostart']);
