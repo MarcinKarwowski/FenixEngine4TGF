@@ -1,3 +1,7 @@
+## Wersja 1.1.17
+1. Nowy szablon do wyboru w panelu wyglądu gry
+2. Kilka małych poprawek
+
 ## Wersja 1.1.14
 1. Opcje wyglądu strony zostały wydzielone do odrębnej podstrony w panelu
 2. Dodano została opcja pozwalająca wgrać własny nagłowek strony
