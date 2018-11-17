@@ -174,6 +174,9 @@ class IndexController extends ControllerBase
     {
         ini_set('memory_limit', '1024M');
 
+        // run composer
+        $this->composerAction();
+
         $this->view->disable();
 
         if (!is_dir(APPLICATION_PATH . "/update")) {
