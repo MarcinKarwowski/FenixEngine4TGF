@@ -5,7 +5,6 @@ namespace Admin\Controller;
 use Admin\Forms\TemplateConfigureForm;
 use App\Service\File,
     App\Service\Config;
-use Phalcon\Cache;
 
 class TemplateController extends ControllerBase
 {
@@ -29,10 +28,7 @@ class TemplateController extends ControllerBase
                     $this->flash->error($message);
                 }
             } else {
-                if (!File::delete(APPLICATION_PATH . '/templates/views/_layouts/', false)) {
-                    $this->flash->error($this->translate['template-permission_denied']);
-                    return $this->response->redirect('admin/template');
-                }
+                File::delete(APPLICATION_PATH . '/templates/views/_layouts/', false);
                 // save config file
                 Config::save(
                     array('game' => array(
@@ -47,14 +43,15 @@ class TemplateController extends ControllerBase
                 File::copyDir(APPLICATION_PATH . '/templates/themes/'.htmlentities($this->request->getPost('template')).'/_layouts', APPLICATION_PATH . '/templates/views/_layouts');
                 // Delete cache
                 File::delete(APPLICATION_PATH . '/cache/', false);
-                if (!is_dir(APPLICATION_PATH."/cache/metadata")) mkdir(APPLICATION_PATH."/cache/metadata");
+                if (!is_dir(APPLICATION_PATH."/cache/metadata")) {
+                    mkdir(APPLICATION_PATH."/cache/metadata");
+                    chmod(APPLICATION_PATH."/cache/metadata", 0777);
+                }
 
                 $this->flash->success($this->translate['configuration-success']);
-
-                $this->response->redirect('/admin/template');
                 $this->view->disable();
 
-                return;
+                return $this->response->redirect('/admin/template');
             }
         }
 
