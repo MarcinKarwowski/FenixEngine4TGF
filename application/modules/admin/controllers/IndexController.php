@@ -214,6 +214,10 @@ class IndexController extends ControllerBase
         File::copyDir(APPLICATION_PATH . '/update/FenixEngine4TGF-master', BASE_PATH);
         File::delete(APPLICATION_PATH . '/update/FenixEngine4TGF-master/', true);
 
+        if (!is_dir(APPLICATION_PATH.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'_layouts')) {
+            mkdir(APPLICATION_PATH . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'views'.DIRECTORY_SEPARATOR.'_layouts');
+            chmod(APPLICATION_PATH . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'views'.DIRECTORY_SEPARATOR.'_layouts', 0777);
+        }
         if (!is_file(APPLICATION_PATH.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'_layouts'.DIRECTORY_SEPARATOR.'mainpage.volt')) {
             File::copyDir(APPLICATION_PATH . '/templates/themes/default/_layouts', APPLICATION_PATH . '/templates/views/_layouts');
         }

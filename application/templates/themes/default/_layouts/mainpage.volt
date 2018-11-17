@@ -20,7 +20,7 @@
     {{ stylesheet_link("scripts/jquery.ui/jquery.ui.min.css") }}
 
     <style>
-        {% if config.game.template_bg|length > 6 %}
+        {% if config.game.template_bg is defined and config.game.template_bg|length > 6 %}
         .wrapper {
             background: rgba(0, 0, 0, 0) url({{ config.game.template_bg }}) no-repeat scroll top center;
         }
