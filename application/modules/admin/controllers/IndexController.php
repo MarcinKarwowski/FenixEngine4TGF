@@ -172,6 +172,8 @@ class IndexController extends ControllerBase
      */
     public function runupdateAction()
     {
+        ini_set('memory_limit', '1024M');
+
         $this->view->disable();
 
         if (!is_dir(APPLICATION_PATH . "/update")) {
@@ -208,11 +210,13 @@ class IndexController extends ControllerBase
             }
             $this->db->query($query['make']);
         }
-        // Clear some folders before update
-        File::delete(BASE_PATH . DIRECTORY_SEPARATOR . 'vendor', false);
 
         File::copyDir(APPLICATION_PATH . '/update/FenixEngine4TGF-master', BASE_PATH);
         File::delete(APPLICATION_PATH . '/update/FenixEngine4TGF-master/', true);
+
+        if (!is_file(APPLICATION_PATH.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'_layouts'.DIRECTORY_SEPARATOR.'mainpage.volt')) {
+            File::copyDir(APPLICATION_PATH . '/templates/themes/default/_layouts', APPLICATION_PATH . '/templates/views/_layouts');
+        }
 
         Config::save(
             array('game' => array('engineVer' => trim(file_get_contents('https://raw.githubusercontent.com/ThoranRion/FenixEngine4TGF/master/VERSION.md'.'?'.mt_rand()))))
