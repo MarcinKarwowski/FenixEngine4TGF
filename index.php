@@ -6,7 +6,7 @@ ini_set('session.save_handler', 'files');
 ini_set('opcache.enable', false);
 
 // dev - comment when end of dev
-putenv('APPLICATION_ENV=development');
+// putenv('APPLICATION_ENV=development');
 
 define('BASE_PATH', dirname(__FILE__));
 define('APPLICATION_PATH', BASE_PATH . DIRECTORY_SEPARATOR . 'application');

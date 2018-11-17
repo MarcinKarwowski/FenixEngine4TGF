@@ -27,7 +27,7 @@
         .navbar-default .navbar-nav>li>a:hover {
             color: #f0e6d9;
         }
-        {% if config.game.template_bg|length > 6 %}
+        {% if config.game.template_bg is defined and config.game.template_bg|length > 6 %}
         .navbar-default {
             margin-bottom: 0;
         }
@@ -84,7 +84,7 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="container">
         <div class="row">
-            {% if config.game.template_bg|length > 6 %}
+            {% if config.game.template_bg is defined %}
                 <div class="col-lg-12 mainpage-header">
 
                 </div>

@@ -49,12 +49,12 @@
     {{ javascript_include("templates/game/fenix/script.js") }}
 
     <style>
-        {% if config.game.template_text_color|length == 6 %}
+        {% if config.game.template_text_color is defined and config.game.template_text_color|length == 6 %}
         .chat-message {
             color: # {{ config.game.template_text_color }} !important;
         }
         {% endif %}
-        {% if config.game.template_bg|length > 6 %}
+        {% if config.game.template_bg is defined and config.game.template_bg|length > 6 %}
         .header-character {
             background-image: url({{ config.game.template_bg }});
             background-size: cover;
