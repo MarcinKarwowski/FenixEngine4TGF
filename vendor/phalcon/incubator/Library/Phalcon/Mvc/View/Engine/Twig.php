@@ -1,8 +1,10 @@
 <?php
 namespace Phalcon\Mvc\View\Engine;
 
+use Phalcon\DiInterface;
 use Phalcon\Mvc\View\Engine;
 use Phalcon\Mvc\View\EngineInterface;
+use Phalcon\Mvc\ViewBaseInterface;
 
 /**
  * Phalcon\Mvc\View\Engine\Twig
@@ -10,7 +12,6 @@ use Phalcon\Mvc\View\EngineInterface;
  */
 class Twig extends Engine implements EngineInterface
 {
-
     /**
      * @var \Phalcon\Mvc\View\Engine\Twig\Environment
      */
@@ -19,17 +20,22 @@ class Twig extends Engine implements EngineInterface
     /**
      * {@inheritdoc}
      *
-     * @param \Phalcon\Mvc\ViewInterface $view
-     * @param \Phalcon\DiInterface       $di
-     * @param array                      $options
+     * @param ViewBaseInterface $view
+     * @param DiInterface       $di
+     * @param array             $options
+     * @param array             $userFunctions
      */
-    public function __construct($view, $di = null, $options = array())
-    {
+    public function __construct(
+        ViewBaseInterface $view,
+        DiInterface $di = null,
+        $options = [],
+        $userFunctions = []
+    ) {
         $loader     = new \Twig_Loader_Filesystem($view->getViewsDir());
         $this->twig = new Twig\Environment($di, $loader, $options);
 
         $this->twig->addExtension(new Twig\CoreExtension());
-        $this->registryFunctions($view, $di);
+        $this->registryFunctions($view, $di, $userFunctions);
 
         parent::__construct($view, $di);
     }
@@ -38,22 +44,22 @@ class Twig extends Engine implements EngineInterface
      * Registers common function in Twig
      *
      * @param \Phalcon\Mvc\ViewInterface $view
+     * @param \Phalcon\DiInterface       $di
+     * @param array                      $userFunctions
      */
-    protected function registryFunctions($view, $di)
+    protected function registryFunctions($view, DiInterface $di, $userFunctions = [])
     {
-        $options = array(
-            'is_safe' => array('html')
-        );
+        $options = ['is_safe' => ['html']];
 
-        $functions = array(
+        $functions = [
             new \Twig_SimpleFunction('content', function () use ($view) {
                 return $view->getContent();
             }, $options),
-            new \Twig_SimpleFunction('partial', function ($partialPath) use ($view) {
-                return $view->partial($partialPath);
+            new \Twig_SimpleFunction('partial', function ($partialPath, $params = null) use ($view) {
+                return $view->partial($partialPath, $params);
             }, $options),
-            new \Twig_SimpleFunction('linkTo', function ($parameters, $text = null) {
-                return \Phalcon\Tag::linkTo($parameters, $text);
+            new \Twig_SimpleFunction('linkTo', function ($parameters, $text = null, $local = true) {
+                return \Phalcon\Tag::linkTo($parameters, $text, $local);
             }, $options),
             new \Twig_SimpleFunction('textField', function ($parameters) {
                 return \Phalcon\Tag::textField($parameters);
@@ -76,16 +82,16 @@ class Twig extends Engine implements EngineInterface
             new \Twig_SimpleFunction('submitButton', function ($parameters) {
                 return \Phalcon\Tag::submitButton($parameters);
             }, $options),
-            new \Twig_SimpleFunction('selectStatic', function ($parameters, $data = array()) {
+            new \Twig_SimpleFunction('selectStatic', function ($parameters, $data = []) {
                 return \Phalcon\Tag::selectStatic($parameters, $data);
             }, $options),
-            new \Twig_SimpleFunction('select', function ($parameters, $data = array()) {
+            new \Twig_SimpleFunction('select', function ($parameters, $data = []) {
                 return \Phalcon\Tag::select($parameters, $data);
             }, $options),
             new \Twig_SimpleFunction('textArea', function ($parameters) {
                 return \Phalcon\Tag::textArea($parameters);
             }, $options),
-            new \Twig_SimpleFunction('form', function ($parameters = array()) {
+            new \Twig_SimpleFunction('form', function ($parameters = []) {
                 return \Phalcon\Tag::form($parameters);
             }, $options),
             new \Twig_SimpleFunction('endForm', function () {
@@ -100,11 +106,11 @@ class Twig extends Engine implements EngineInterface
             new \Twig_SimpleFunction('javascriptInclude', function ($parameters = null, $local = true) {
                 return \Phalcon\Tag::javascriptInclude($parameters, $local);
             }, $options),
-            new \Twig_SimpleFunction('image', function ($parameters) {
-                return \Phalcon\Tag::image($parameters);
+            new \Twig_SimpleFunction('image', function ($parameters = null, $local = true) {
+                return \Phalcon\Tag::image($parameters, $local);
             }, $options),
-            new \Twig_SimpleFunction('friendlyTitle', function ($text, $separator = null, $lowercase = true) {
-                return \Phalcon\Tag::friendlyTitle($text, $separator, $lowercase);
+            new \Twig_SimpleFunction('friendlyTitle', function ($text, $separator = "-", $lc = true, $replace = null) {
+                return \Phalcon\Tag::friendlyTitle($text, $separator, $lc, $replace);
             }, $options),
             new \Twig_SimpleFunction('getDocType', function () {
                 return \Phalcon\Tag::getDocType();
@@ -118,7 +124,11 @@ class Twig extends Engine implements EngineInterface
             new \Twig_SimpleFunction('url', function ($route) use ($di) {
                 return $di->get("url")->get($route);
             }, $options)
-        );
+        ];
+
+        if (!empty($userFunctions)) {
+            $functions = array_merge($functions, $userFunctions);
+        }
 
         foreach ($functions as $function) {
             $this->twig->addFunction($function);

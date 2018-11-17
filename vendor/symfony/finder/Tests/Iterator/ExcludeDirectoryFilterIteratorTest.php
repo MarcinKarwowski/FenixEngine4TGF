@@ -39,6 +39,7 @@ class ExcludeDirectoryFilterIteratorTest extends RealIteratorTestCase
             'test.py',
             'test.php',
             'toto',
+            'toto/.git',
             'foo bar',
         );
 
@@ -53,12 +54,27 @@ class ExcludeDirectoryFilterIteratorTest extends RealIteratorTestCase
             'foo/bar.tmp',
             'test.php',
             'toto',
+            'toto/.git',
+            'foo bar',
+        );
+
+        $toto = array(
+            '.bar',
+            '.foo',
+            '.foo/.bar',
+            '.foo/bar',
+            '.git',
+            'test.py',
+            'foo',
+            'foo/bar.tmp',
+            'test.php',
             'foo bar',
         );
 
         return array(
             array(array('foo'), $this->toAbsolute($foo)),
             array(array('fo'), $this->toAbsolute($fo)),
+            array(array('toto/'), $this->toAbsolute($toto)),
         );
     }
 }

@@ -274,6 +274,9 @@ return array(
                 'className' => 'Install\Module',
                 'path' => APPLICATION_PATH . '/modules/install/Module.php'
             ]
-        ]
+        ],
+        'registerNamespaces' => [
+            'App' => BASE_PATH . '/library/'
+        ],
     ),
 );

@@ -42,14 +42,13 @@ class ControllerBase extends Controller
         $this->view->params = $this -> router -> getMatches() ? $this -> router -> getMatches() : [];
 
         // We can override templates. Only ingame and game
-        if (is_file(APPLICATION_PATH . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $this->identity['template'] . DIRECTORY_SEPARATOR . strtolower($strControllerName) . DIRECTORY_SEPARATOR . strtolower($strActionName) . '.volt')) {
-            $this->view->setViewsDir(APPLICATION_PATH . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $this->identity['template']);
-            $this->view->setPartialsDir('');
-            $this->view->setLayoutsDir(APPLICATION_PATH.'/templates/themes/' . $this->identity['template'].'/');
+        if (is_file(APPLICATION_PATH . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $this->config->game->template . DIRECTORY_SEPARATOR . strtolower($strControllerName) . DIRECTORY_SEPARATOR . strtolower($strActionName) . '.volt')) {
+            $this->view->setViewsDir(APPLICATION_PATH . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $this->config->game->template);
         } else {
-            $this->view->setPartialsDir('');
-            $this->view->setLayoutsDir(APPLICATION_PATH.'/templates/themes/' . $this->identity['template'].'/');
+            $this->view->setViewsDir(APPLICATION_PATH . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'views');
         }
+        $this->view->setPartialsDir('');
+        $this->view->setLayoutsDir(APPLICATION_PATH.'/templates/views/_layouts/');
         /*
          * set user defined layout
          */

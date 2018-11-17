@@ -208,6 +208,8 @@ class IndexController extends ControllerBase
             }
             $this->db->query($query['make']);
         }
+        // Clear some folders before update
+        File::delete(BASE_PATH . DIRECTORY_SEPARATOR . 'vendor', false);
 
         File::copyDir(APPLICATION_PATH . '/update/FenixEngine4TGF-master', BASE_PATH);
         File::delete(APPLICATION_PATH . '/update/FenixEngine4TGF-master/', true);

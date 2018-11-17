@@ -1,10 +1,10 @@
-{% extends "../../../templates/admin.volt" %}
+{% extends "admin.volt" %}
 
 {% block pageContent %}
     {{ form('class': 'form-horizontal', 'id': 'templateconfigure-form', 'action': '') }}
     {{ forms.get('templateconfigure').renderDecorated('template', ['value': config.game.template, 'class': 'form-control']) }}
-    {{ forms.get('templateconfigure').renderDecorated('template_text_color', ['value': config.game.template_text_color, 'class': 'form-control', 'maxlength': 6, 'tooltip': t['configuration-template_text_color_desc']]) }}
-    {{ forms.get('templateconfigure').renderDecorated('custom', ['value': config.game.custom, 'class': 'form-control', 'maxlength': 1000]) }}
+    {{ forms.get('templateconfigure').renderDecorated('template_text_color', ['value': config.game.template_text_color is defined ? config.game.template_text_color : '', 'class': 'form-control', 'maxlength': 6, 'tooltip': t['configuration-template_text_color_desc']]) }}
+    {{ forms.get('templateconfigure').renderDecorated('custom', ['value': config.game.custom, 'class': 'form-control text-field', 'maxlength': 1000]) }}
     <!-- Button -->
     <div class="form-group">
         <label class="col-md-4 control-label" for="singlebutton"></label>

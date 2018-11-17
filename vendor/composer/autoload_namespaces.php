@@ -6,9 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'phpDocumentor' => array($vendorDir . '/phpdocumentor/reflection-docblock/src'),
-    'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
-    'Phalcon' => array($vendorDir . '/phalcon/incubator/Library'),
-    'JsonSchema' => array($vendorDir . '/justinrainbow/json-schema/src'),
-    'Composer' => array($vendorDir . '/composer/composer/src'),
+    'Twig_' => array($vendorDir . '/twig/twig/lib'),
 );

@@ -5593,6 +5593,10 @@ table.text-center th {
     width: 100% !important;
 }
 
+.text-field {
+    min-height: 500px;
+}
+
 /*
  * Misc: print
  * -----------

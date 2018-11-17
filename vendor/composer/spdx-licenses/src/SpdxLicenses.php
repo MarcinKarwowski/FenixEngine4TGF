@@ -25,8 +25,8 @@ class SpdxLicenses
      * The array is indexed by license identifiers, which contain
      * a numerically indexed array with license details.
      *
-     *  [ license identifier =>
-     *      [ 0 => full name (string), 1 => osi certified (bool) ]
+     *  [ lowercased license identifier =>
+     *      [ 0 => identifier (string), 1 => full name (string), 2 => osi certified (bool), 3 => deprecated (bool) ]
      *    , ...
      *  ]
      *
@@ -45,8 +45,8 @@ class SpdxLicenses
      * The array is indexed by license exception identifiers, which contain
      * a numerically indexed array with license exception details.
      *
-     *  [ exception identifier =>
-     *      [ 0 => full name (string) ]
+     *  [ lowercased exception identifier =>
+     *      [ 0 => exception identifier (string), 1 => full name (string) ]
      *    , ...
      *  ]
      *
@@ -71,7 +71,7 @@ class SpdxLicenses
      * This function adds a link to the full license text to the license metadata.
      * The array returned is in the form of:
      *
-     *  [ 0 => full name (string), 1 => osi certified, 2 => link to license text (string) ]
+     *  [ 0 => full name (string), 1 => osi certified, 2 => link to license text (string), 3 => deprecation status (bool) ]
      *
      * @param string $identifier
      *
@@ -79,14 +79,30 @@ class SpdxLicenses
      */
     public function getLicenseByIdentifier($identifier)
     {
-        if (!isset($this->licenses[$identifier])) {
+        $key = strtolower($identifier);
+
+        if (!isset($this->licenses[$key])) {
             return;
         }
 
-        $license = $this->licenses[$identifier];
-        $license[] = 'https://spdx.org/licenses/' . $identifier . '.html#licenseText';
+        list($identifier, $name, $isOsiApproved, $isDeprecatedLicenseId) = $this->licenses[$key];
 
-        return $license;
+        return array(
+            $name,
+            $isOsiApproved,
+            'https://spdx.org/licenses/' . $identifier . '.html#licenseText',
+            $isDeprecatedLicenseId,
+        );
+    }
+
+    /**
+     * Returns all licenses information, keyed by the lowercased license identifier.
+     *
+     * @return array[] Each item is [ 0 => identifier (string), 1 => full name (string), 2 => osi certified (bool), 3 => deprecated (bool) ]
+     */
+    public function getLicenses()
+    {
+        return $this->licenses;
     }
 
     /**
@@ -103,14 +119,18 @@ class SpdxLicenses
      */
     public function getExceptionByIdentifier($identifier)
     {
-        if (!isset($this->exceptions[$identifier])) {
+        $key = strtolower($identifier);
+
+        if (!isset($this->exceptions[$key])) {
             return;
         }
 
-        $license = $this->exceptions[$identifier];
-        $license[] = 'https://spdx.org/licenses/' . $identifier . '.html#licenseExceptionText';
+        list($identifier, $name) = $this->exceptions[$key];
 
-        return $license;
+        return array(
+            $name,
+            'https://spdx.org/licenses/' . $identifier . '.html#licenseExceptionText',
+        );
     }
 
     /**
@@ -122,15 +142,15 @@ class SpdxLicenses
      */
     public function getIdentifierByName($name)
     {
-        foreach ($this->licenses as $identifier => $licenseData) {
-            if ($licenseData[0] === $name) {
-                return $identifier;
+        foreach ($this->licenses as $licenseData) {
+            if ($licenseData[1] === $name) {
+                return $licenseData[0];
             }
         }
 
-        foreach ($this->exceptions as $identifier => $licenseData) {
-            if ($licenseData[0] === $name) {
-                return $identifier;
+        foreach ($this->exceptions as $licenseData) {
+            if ($licenseData[1] === $name) {
+                return $licenseData[0];
             }
         }
     }
@@ -144,13 +164,26 @@ class SpdxLicenses
      */
     public function isOsiApprovedByIdentifier($identifier)
     {
-        return $this->licenses[$identifier][1];
+        return $this->licenses[strtolower($identifier)][2];
+    }
+
+    /**
+     * Returns the deprecation status for a license by identifier.
+     *
+     * @param string $identifier
+     *
+     * @return bool
+     */
+    public function isDeprecatedByIdentifier($identifier)
+    {
+        return $this->licenses[strtolower($identifier)][3];
     }
 
     /**
      * @param array|string $license
      *
      * @throws \InvalidArgumentException
+     *
      * @return bool
      */
     public function validate($license)
@@ -183,17 +216,29 @@ class SpdxLicenses
 
     private function loadLicenses()
     {
-        if (null === $this->licenses) {
-            $jsonFile = file_get_contents(self::getResourcesDir() . '/' . self::LICENSES_FILE);
-            $this->licenses = json_decode($jsonFile, true);
+        if (null !== $this->licenses) {
+            return;
+        }
+
+        $json = file_get_contents(self::getResourcesDir() . '/' . self::LICENSES_FILE);
+        $this->licenses = array();
+
+        foreach (json_decode($json, true) as $identifier => $license) {
+            $this->licenses[strtolower($identifier)] = array($identifier, $license[0], $license[1], $license[2]);
         }
     }
 
     private function loadExceptions()
     {
-        if (null === $this->exceptions) {
-            $jsonFile = file_get_contents(self::getResourcesDir() . '/' . self::EXCEPTIONS_FILE);
-            $this->exceptions = json_decode($jsonFile, true);
+        if (null !== $this->exceptions) {
+            return;
+        }
+
+        $json = file_get_contents(self::getResourcesDir() . '/' . self::EXCEPTIONS_FILE);
+        $this->exceptions = array();
+
+        foreach (json_decode($json, true) as $identifier => $exception) {
+            $this->exceptions[strtolower($identifier)] = array($identifier, $exception[0]);
         }
     }
 
@@ -204,8 +249,7 @@ class SpdxLicenses
     {
         if (null === $this->licensesExpression) {
             $licenses = array_map('preg_quote', array_keys($this->licenses));
-            sort($licenses);
-            $licenses = array_reverse($licenses);
+            rsort($licenses);
             $licenses = implode('|', $licenses);
             $this->licensesExpression = $licenses;
         }
@@ -220,8 +264,7 @@ class SpdxLicenses
     {
         if (null === $this->exceptionsExpression) {
             $exceptions = array_map('preg_quote', array_keys($this->exceptions));
-            sort($exceptions);
-            $exceptions = array_reverse($exceptions);
+            rsort($exceptions);
             $exceptions = implode('|', $exceptions);
             $this->exceptionsExpression = $exceptions;
         }
@@ -233,10 +276,15 @@ class SpdxLicenses
      * @param string $license
      *
      * @throws \RuntimeException
+     *
      * @return bool
      */
     private function isValidLicenseString($license)
     {
+        if (isset($this->licenses[strtolower($license)])) {
+            return true;
+        }
+
         $licenses = $this->getLicensesExpression();
         $exceptions = $this->getExceptionsExpression();
 
@@ -244,7 +292,7 @@ class SpdxLicenses
 {
 (?(DEFINE)
     # idstring: 1*( ALPHA / DIGIT / - / . )
-    (?<idstring>[\pL\pN\-\.]{1,})
+    (?<idstring>[\pL\pN.-]{1,})
 
     # license-id: taken from list
     (?<licenseid>${licenses})
@@ -258,18 +306,18 @@ class SpdxLicenses
     # simple-expresssion: license-id / license-id+ / license-ref
     (?<simple_expression>(?&licenseid)\+? | (?&licenseid) | (?&licenseref))
 
-    # compound expression: 1*(
+    # compound-expression: 1*(
     #   simple-expression /
     #   simple-expression WITH license-exception-id /
     #   compound-expression AND compound-expression /
     #   compound-expression OR compound-expression
     # ) / ( compound-expression ) )
     (?<compound_head>
-        (?&simple_expression) ( \s+ (?:with|WITH) \s+ (?&licenseexceptionid))?
+        (?&simple_expression) ( \s+ WITH \s+ (?&licenseexceptionid))?
             | \( \s* (?&compound_expression) \s* \)
     )
     (?<compound_expression>
-        (?&compound_head) (?: \s+ (?:and|AND|or|OR) \s+ (?&compound_expression))?
+        (?&compound_head) (?: \s+ (?:AND|OR) \s+ (?&compound_expression))?
     )
 
     # license-expression: 1*1(simple-expression / compound-expression)
@@ -277,7 +325,7 @@ class SpdxLicenses
 ) # end of define
 
 ^(NONE | NOASSERTION | (?&license_expression))$
-}x
+}xi
 REGEX;
 
         $match = preg_match($regex, $license);

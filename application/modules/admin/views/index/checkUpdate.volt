@@ -1,4 +1,4 @@
-{% extends "../../../templates/admin.volt" %}
+{% extends "admin.volt" %}
 
 {% block pageContent %}
     <p>{{ t['update-info'] }}</p>

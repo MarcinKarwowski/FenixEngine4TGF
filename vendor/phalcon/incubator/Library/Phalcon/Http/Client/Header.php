@@ -1,12 +1,13 @@
 <?php
+
 /*
   +------------------------------------------------------------------------+
   | Phalcon Framework                                                      |
   +------------------------------------------------------------------------+
-  | Copyright (c) 2011-2012 Phalcon Team (http://www.phalconphp.com)       |
+  | Copyright (c) 2011-2016 Phalcon Team (https://www.phalconphp.com)      |
   +------------------------------------------------------------------------+
   | This source file is subject to the New BSD License that is bundled     |
-  | with this package in the file docs/LICENSE.txt.                        |
+  | with this package in the file LICENSE.txt.                             |
   |                                                                        |
   | If you did not receive a copy of the license and are unable to         |
   | obtain it through the world-wide-web, please send an email             |
@@ -15,66 +16,20 @@
   | Author: Tuğrul Topuz <tugrultopuz@gmail.com>                           |
   +------------------------------------------------------------------------+
 */
+
 namespace Phalcon\Http\Client;
 
+use Phalcon\Http\Response\StatusCode;
+
+/**
+ * Phalcon\Http\Client\Header
+ *
+ * @package Phalcon\Http\Client
+ */
 class Header implements \Countable
 {
-    protected static $messages = array(
-        // Informational 1xx
-        100 => 'Continue',
-        101 => 'Switching Protocols',
-
-        // Success 2xx
-        200 => 'OK',
-        201 => 'Created',
-        202 => 'Accepted',
-        203 => 'Non-Authoritative Information',
-        204 => 'No Content',
-        205 => 'Reset Content',
-        206 => 'Partial Content',
-
-        // Redirection 3xx
-        300 => 'Multiple Choices',
-        301 => 'Moved Permanently',
-        302 => 'Found', // 1.1
-        303 => 'See Other',
-        304 => 'Not Modified',
-        305 => 'Use Proxy',
-        // 306 is deprecated but reserved
-        307 => 'Temporary Redirect',
-
-        // Client Error 4xx
-        400 => 'Bad Request',
-        401 => 'Unauthorized',
-        402 => 'Payment Required',
-        403 => 'Forbidden',
-        404 => 'Not Found',
-        405 => 'Method Not Allowed',
-        406 => 'Not Acceptable',
-        407 => 'Proxy Authentication Required',
-        408 => 'Request Timeout',
-        409 => 'Conflict',
-        410 => 'Gone',
-        411 => 'Length Required',
-        412 => 'Precondition Failed',
-        413 => 'Request Entity Too Large',
-        414 => 'Request-URI Too Long',
-        415 => 'Unsupported Media Type',
-        416 => 'Requested Range Not Satisfiable',
-        417 => 'Expectation Failed',
-
-        // Server Error 5xx
-        500 => 'Internal Server Error',
-        501 => 'Not Implemented',
-        502 => 'Bad Gateway',
-        503 => 'Service Unavailable',
-        504 => 'Gateway Timeout',
-        505 => 'HTTP Version Not Supported',
-        509 => 'Bandwidth Limit Exceeded'
-    );
-
-    private $fields = array();
-    public $version = '1.0';
+    private $fields = [];
+    public $version = '1.0.2';
     public $statusCode = 0;
     public $statusMessage = '';
     public $status = '';
@@ -82,26 +37,69 @@ class Header implements \Countable
     const BUILD_STATUS = 1;
     const BUILD_FIELDS = 2;
 
+    /**
+     * @param string $name
+     * @param string $value
+     * @return $this
+     */
     public function set($name, $value)
     {
         $this->fields[$name] = $value;
+        return $this;
     }
 
-    public function setMultiple($fields)
+    /**
+     * @param array $fields
+     * @return $this
+     */
+    public function setMultiple(array $fields)
     {
         $this->fields = $fields;
+        return $this;
     }
 
-    public function addMultiple($fields)
+    /**
+     * Adds multiple headers.
+     *
+     * <code>
+     * $headers = [
+     *     'X-Foo' => 'bar',
+     *     'Content-Type' => 'application/json',
+     * ];
+     *
+     * $curl->addMultiple($headers);
+     * </code>
+     *
+     * @param  array $fields An array of name => value pairs.
+     * @return $this
+     */
+    public function addMultiple(array $fields)
     {
-        $this->fields = array_combine($this->fields, $fields);
+        $this->fields = array_merge($this->fields, $fields);
+
+        return $this;
     }
 
-    public function get($name)
+    /**
+     * @param string $name
+     * @param mixed  $default
+     *
+     * @return mixed
+     */
+    public function get($name, $default = null)
     {
-        return $this->fields[$name];
+        foreach ($this->fields as $key => $value) {
+            if (strcmp(strtolower($key), strtolower($name)) === 0) {
+                return $value;
+            }
+        }
+
+        return $default;
     }
 
+    /**
+     * @return array
+     */
     public function getAll()
     {
         return $this->fields;
@@ -116,19 +114,28 @@ class Header implements \Countable
      */
     public function has($name)
     {
-        foreach ($this->getAll() as $key => $value) {
-            if (0 === strcmp(strtolower($key), strtolower($name))) {
+        foreach ($this->fields as $key => $value) {
+            if (strcmp(strtolower($key), strtolower($name)) === 0) {
                 return true;
             }
         }
         return false;
     }
 
+    /**
+     * @param string $name
+     * @return $this
+     */
     public function remove($name)
     {
         unset($this->fields[$name]);
+        return $this;
     }
 
+    /**
+     * @param $content
+     * @return bool
+     */
     public function parse($content)
     {
         if (empty($content)) {
@@ -141,12 +148,12 @@ class Header implements \Countable
             return false;
         }
 
-        $status = array();
-        if (preg_match('/^HTTP\/(\d(?:\.\d)?)\s+(\d{3})\s+(.+)$/i', $content[0], $status)) {
+        $status = [];
+        if (preg_match('%^HTTP/(\d(?:\.\d)?)\s+(\d{3})\s?+(.+)?$%i', $content[0], $status)) {
             $this->status = array_shift($content);
             $this->version = $status[1];
             $this->statusCode = intval($status[2]);
-            $this->statusMessage = $status[3];
+            $this->statusMessage = isset($status[3]) ? $status[3] : '';
         }
 
         foreach ($content as $field) {
@@ -162,13 +169,17 @@ class Header implements \Countable
         return true;
     }
 
+    /**
+     * @param int $flags
+     * @return array|string
+     */
     public function build($flags = 0)
     {
-        $lines = array();
-        if (($flags & self::BUILD_STATUS) && !empty(self::$messages[$this->statusCode])) {
+        $lines = [];
+        if (($flags & self::BUILD_STATUS) && StatusCode::message($this->statusCode)) {
             $lines[] = 'HTTP/' . $this->version . ' ' .
                 $this->statusCode . ' ' .
-                self::$messages[$this->statusCode];
+                StatusCode::message($this->statusCode);
         }
 
         foreach ($this->fields as $field => $value) {
@@ -182,6 +193,9 @@ class Header implements \Countable
         return $lines;
     }
 
+    /**
+     * @return int
+     */
     public function count()
     {
         return count($this->fields);

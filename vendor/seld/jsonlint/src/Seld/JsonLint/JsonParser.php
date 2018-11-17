@@ -117,12 +117,13 @@ class JsonParser
 
     /**
      * @param  string                $input JSON string
+     * @param  int                   $flags Bitmask of parse/lint options (see constants of this class)
      * @return null|ParsingException null if no error is found, a ParsingException containing all details otherwise
      */
-    public function lint($input)
+    public function lint($input, $flags = 0)
     {
         try {
-            $this->parse($input);
+            $this->parse($input, $flags);
         } catch (ParsingException $e) {
             return $e;
         }
@@ -130,6 +131,7 @@ class JsonParser
 
     /**
      * @param  string           $input JSON string
+     * @param  int              $flags Bitmask of parse/lint options (see constants of this class)
      * @return mixed
      * @throws ParsingException
      */
@@ -170,7 +172,7 @@ class JsonParser
         $errStr = null;
 
         while (true) {
-            // retreive state number from top of stack
+            // retrieve state number from top of stack
             $state = $this->stack[count($this->stack)-1];
 
             // use default actions if available
@@ -203,7 +205,7 @@ class JsonParser
                         } elseif (preg_match('{".+?(\\\\[^"bfnrt/\\\\u])}', $this->lexer->getUpcomingInput(), $match)) {
                             $message .= ", it appears you have an unescaped backslash at: ".$match[1];
                         } elseif (preg_match('{"(?:[^"]+|\\\\")*$}m', $this->lexer->getUpcomingInput())) {
-                            $message .= ", it appears you forgot to terminated the string, or attempted to write a multiline string which is invalid";
+                            $message .= ", it appears you forgot to terminate a string, or attempted to write a multiline string which is invalid";
                         }
                     }
 
@@ -376,7 +378,11 @@ class JsonParser
             $yyval->token = array($tokens[$len-2], $tokens[$len]);
             break;
         case 16:
-            $property = $tokens[$len][0] === '' ? '_empty_' : $tokens[$len][0];
+            if (PHP_VERSION_ID < 70100) {
+                $property = $tokens[$len][0] === '' ? '_empty_' : $tokens[$len][0];
+            } else {
+                $property = $tokens[$len][0];
+            }
             if ($this->flags & self::PARSE_TO_ASSOC) {
                 $yyval->token = array();
                 $yyval->token[$property] = $tokens[$len][1];
@@ -393,7 +399,7 @@ class JsonParser
                     $errStr = 'Parse error on line ' . ($yylineno+1) . ":\n";
                     $errStr .= $this->lexer->showPosition() . "\n";
                     $errStr .= "Duplicate key: ".$tokens[$len][0];
-                    throw new ParsingException($errStr);
+                    throw new DuplicateKeyException($errStr, $tokens[$len][0], array('line' => $yylineno+1));
                 } elseif (($this->flags & self::ALLOW_DUPLICATE_KEYS) && isset($tokens[$len-2][$key])) {
                     $duplicateCount = 1;
                     do {
@@ -404,12 +410,16 @@ class JsonParser
                 $tokens[$len-2][$key] = $tokens[$len][1];
             } else {
                 $yyval->token = $tokens[$len-2];
-                $key = $tokens[$len][0] === '' ? '_empty_' : $tokens[$len][0];
+                if (PHP_VERSION_ID < 70100) {
+                    $key = $tokens[$len][0] === '' ? '_empty_' : $tokens[$len][0];
+                } else {
+                    $key = $tokens[$len][0];
+                }
                 if (($this->flags & self::DETECT_KEY_CONFLICTS) && isset($tokens[$len-2]->{$key})) {
                     $errStr = 'Parse error on line ' . ($yylineno+1) . ":\n";
                     $errStr .= $this->lexer->showPosition() . "\n";
                     $errStr .= "Duplicate key: ".$tokens[$len][0];
-                    throw new ParsingException($errStr);
+                    throw new DuplicateKeyException($errStr, $tokens[$len][0], array('line' => $yylineno+1));
                 } elseif (($this->flags & self::ALLOW_DUPLICATE_KEYS) && isset($tokens[$len-2]->{$key})) {
                     $duplicateCount = 1;
                     do {

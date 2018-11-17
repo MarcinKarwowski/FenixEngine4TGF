@@ -2,6 +2,7 @@
 
 namespace Main\Controller;
 
+use \Twig_Loader_Filesystem;
 use Main\Models\Users;
 use Main\Models\Session;
 use Phalcon\Mvc\Controller;
@@ -33,15 +34,14 @@ class ControllerBase extends Controller
         $strControllerName = $dispatcher->getControllerName();
         $strActionName = $dispatcher->getActionName();
 
+        // Template configuration
         if (is_file(APPLICATION_PATH . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $this->config->game->template . DIRECTORY_SEPARATOR . strtolower($strControllerName) . DIRECTORY_SEPARATOR . strtolower($strActionName) . '.volt')) {
             $this->view->setViewsDir(APPLICATION_PATH . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $this->config->game->template);
-            $this->view->setPartialsDir('');
-            $this->view->setLayoutsDir(APPLICATION_PATH.'/templates/themes/' . $this->config->game->template.'/');
         } else {
-            $this->view->setPartialsDir('');
-            $this->view->setLayoutsDir(APPLICATION_PATH.'/templates/themes/' . $this->config->game->template.'/');
+            $this->view->setViewsDir(APPLICATION_PATH . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'views');
         }
-
+        $this->view->setPartialsDir('');
+        $this->view->setLayoutsDir(APPLICATION_PATH.'/templates/views/_layouts/');
         // set counter page if counter time specified
         if ((int)$this->config->game->startTime > time() && $identity === false && $strControllerName != 'session') $this->view->setTemplateAfter('counterpage');
         else $this->view->setTemplateAfter('mainpage');

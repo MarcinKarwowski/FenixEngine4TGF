@@ -3,10 +3,10 @@
   +------------------------------------------------------------------------+
   | Phalcon Framework                                                      |
   +------------------------------------------------------------------------+
-  | Copyright (c) 2011-2014 Phalcon Team (http://www.phalconphp.com)       |
+  | Copyright (c) 2011-2016 Phalcon Team (http://www.phalconphp.com)       |
   +------------------------------------------------------------------------+
   | This source file is subject to the New BSD License that is bundled     |
-  | with this package in the file docs/LICENSE.txt.                        |
+  | with this package in the file LICENSE.txt.                             |
   |                                                                        |
   | If you did not receive a copy of the license and are unable to         |
   | obtain it through the world-wide-web, please send an email             |
@@ -21,7 +21,7 @@ class Document
 {
     protected $collection;
 
-    public function __construct($collection, $doc = array())
+    public function __construct($collection, $doc = [])
     {
         $this->collection = $collection;
         $this->extract(new \RecursiveArrayIterator($doc));
@@ -30,7 +30,7 @@ class Document
     private function extract($iterator, $className = null)
     {
         if (is_numeric($iterator->key())) {
-            $container = array();
+            $container = [];
         } else {
             if (empty($className)) {
                 $container = $this;
@@ -40,26 +40,19 @@ class Document
         }
 
         while ($iterator->valid()) {
-
             $key = $iterator->key();
             $value = $iterator->current();
 
+            if (DbRef::isRef($value)) {
+                $value = new DbRef($this->collection, $value);
+            } elseif (is_array($value)) {
+                $value = $this->extract($iterator->getChildren(), 'stdClass');
+            }
+
             if (is_numeric($key)) {
-                if (DbRef::isRef($value)) {
-                    $container[$key] = new DbRef($this->collection, $value);
-                } elseif (is_array($value)) {
-                    $container[$key] = $this->extract($iterator->getChildren(), 'stdClass');
-                } else {
-                    $container[$key] = $value;
-                }
+                $container[$key] = $value;
             } else {
-                if (DbRef::isRef($value)) {
-                    $container->{$key} = new DbRef($this->collection, $value);
-                } elseif (is_array($value)) {
-                    $container->{$key} = $this->extract($iterator->getChildren(), 'stdClass');
-                } else {
-                    $container->{$key} = $value;
-                }
+                $container->{$key} = $value;
             }
 
             $iterator->next();

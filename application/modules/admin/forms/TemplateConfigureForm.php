@@ -23,7 +23,7 @@ class TemplateConfigureForm extends Form
         $this->add($custom);
 
         // template
-        $template = new Select("template", array('default' => $this -> translate['configuration-default_template']), array(
+        $template = new Select("template", array('default' => $this -> translate['configuration-default_template'], 'fenix' => $this -> translate['configuration-fenix_template']), array(
             'using' => array('id', 'name'),
             'value' => $this -> config -> game -> template
         ));

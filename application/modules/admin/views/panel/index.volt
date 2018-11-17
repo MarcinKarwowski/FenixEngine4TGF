@@ -1,4 +1,4 @@
-{% extends "../../../templates/admin.volt" %}
+{% extends "admin.volt" %}
 
 {% block pageContent %}
 

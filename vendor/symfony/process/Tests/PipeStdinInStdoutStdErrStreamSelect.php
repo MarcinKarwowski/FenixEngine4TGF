@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 define('ERR_SELECT_FAILED', 1);
 define('ERR_TIMEOUT', 2);
 define('ERR_READ_FAILED', 3);
@@ -26,22 +35,22 @@ while ($read || $write) {
     }
 
     if (in_array(STDOUT, $w) && strlen($out) > 0) {
-        $written = fwrite(STDOUT, (binary) $out, 32768);
+        $written = fwrite(STDOUT, (string) $out, 32768);
         if (false === $written) {
             die(ERR_WRITE_FAILED);
         }
-        $out = (binary) substr($out, $written);
+        $out = (string) substr($out, $written);
     }
     if (null === $read && '' === $out) {
         $write = array_diff($write, array(STDOUT));
     }
 
     if (in_array(STDERR, $w) && strlen($err) > 0) {
-        $written = fwrite(STDERR, (binary) $err, 32768);
+        $written = fwrite(STDERR, (string) $err, 32768);
         if (false === $written) {
             die(ERR_WRITE_FAILED);
         }
-        $err = (binary) substr($err, $written);
+        $err = (string) substr($err, $written);
     }
     if (null === $read && '' === $err) {
         $write = array_diff($write, array(STDERR));
