@@ -42,7 +42,6 @@ class Module
          * @var $view \Phalcon\Mvc\View
          */
         $view = $di->get('view');
-        $view->setViewsDir(APPLICATION_PATH . '/modules/game/views/');
 
         //Disable several levels
         $view->disableLevel(array(

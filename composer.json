@@ -1,0 +1,15 @@
+{
+    "name": "marcin/fenixengine",
+    "authors": [
+        {
+            "name": "Marcin Karwowski",
+            "email": "admin@kf2.pl"
+        }
+    ],
+    "require": {
+        "phalcon/incubator": "3.4.*",
+        "composer/composer": "dev-master",
+        "ovr/phalcony": "0.2.*",
+        "swiftmailer/swiftmailer": "5.4.*"
+    }
+}

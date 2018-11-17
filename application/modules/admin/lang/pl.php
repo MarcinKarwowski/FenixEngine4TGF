@@ -54,7 +54,8 @@ return array(
     'configuration-template' => 'Podstawowy wygląd strony',
     'configuration-template_text_color' => 'Podstawowy kolor tekstu w sesji',
     'configuration-template_text_color_desc' => 'Kolor musi być w formacie hex czyli sześć znaków np. ababab. Jeśli chcesz usunąć kolor usuń zawartość pola.',
-    'configuration-default_template' => 'Domyślny szablon',
+    'configuration-default_template' => 'Szablon Nordycki',
+    'configuration-fenix_template' => 'Szablon Fenix',
     'configuration-game_keywords' => 'Słowa kluczowe',
     'configuration-game_timetostart' => 'Data startu gry',
     'configuration-game_keywords_desc' => 'Słowa kluczowe oddzielone przecinkami',
@@ -74,6 +75,7 @@ return array(
     'template-info' => 'Wygląd gry',
     'template-header' => 'Wgraj nagłówek strony (jpg, png, gif)',
     'template-bg_success' => 'Poprawnie wgrano nagłówek strony',
+    'template-permission_denied' => 'Nie można skasować plików z folderu templates/views/_layouts, nadaj im uprawnienia do zapisu',
     // system info
     'info-desc' => 'Informacje na temat systemów gry oraz serwera ',
     'info-more_desc' => 'W razie problemów z grą tutaj można poszukać przyczyn',

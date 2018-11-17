@@ -903,6 +903,9 @@ $sql[] = [
     'check' => "SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME = 'user_token'",
     'make' => "ALTER TABLE `remember_tokens` ADD CONSTRAINT `user_token` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;"
 ];
+$sql[] = [
+    'make' => "ALTER TABLE `remember_tokens` CHANGE `userAgent` `userAgent` VARCHAR(512) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;"
+];
 
 $sql[] = [
     'check' => "SELECT * FROM information_schema.tables WHERE table_schema = '".$parameters['db']['schema']."' AND table_name = 'reset_passwords' LIMIT 1;",
@@ -964,6 +967,9 @@ $sql[] = [
 $sql[] = [
     'check' => "SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME = 'succes_logins_user_id'",
     'make' => "ALTER TABLE `success_logins` ADD CONSTRAINT `succes_logins_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;"
+];
+$sql[] = [
+    'make' => "ALTER TABLE `success_logins` CHANGE `userAgent` `userAgent` VARCHAR(512) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;"
 ];
 
 $sql[] = [

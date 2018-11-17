@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\Finder\Tests\Iterator;
 
-use Symfony\Component\Finder\Iterator\SizeRangeFilterIterator;
 use Symfony\Component\Finder\Comparator\NumberComparator;
+use Symfony\Component\Finder\Iterator\SizeRangeFilterIterator;
 
 class SizeRangeFilterIteratorTest extends RealIteratorTestCase
 {
@@ -36,6 +36,7 @@ class SizeRangeFilterIteratorTest extends RealIteratorTestCase
             'foo',
             'test.php',
             'toto',
+            'toto/.git',
         );
 
         return array(

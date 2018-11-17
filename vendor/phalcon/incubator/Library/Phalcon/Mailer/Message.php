@@ -1,17 +1,22 @@
 <?php
-/**
- * Message.php 2014-08-31 04:50
- * ----------------------------------------------
- *
- *
- * @author      Stanislav Kiryukhin <korsar.zn@gmail.com>
- * @copyright   Copyright (c) 2014, CKGroup.ru
- *
- * @version     0.0.1
- * ----------------------------------------------
- * All Rights Reserved.
- * ----------------------------------------------
- */
+
+/*
+  +------------------------------------------------------------------------+
+  | Phalcon Framework                                                      |
+  +------------------------------------------------------------------------+
+  | Copyright (c) 2011-2016 Phalcon Team (https://www.phalconphp.com)      |
+  +------------------------------------------------------------------------+
+  | This source file is subject to the New BSD License that is bundled     |
+  | with this package in the file LICENSE.txt.                             |
+  |                                                                        |
+  | If you did not receive a copy of the license and are unable to         |
+  | obtain it through the world-wide-web, please send an email             |
+  | to license@phalconphp.com so we can send you a copy immediately.       |
+  +------------------------------------------------------------------------+
+  | Authors: Stanislav Kiryukhin <korsar.zn@gmail.com>                     |
+  +------------------------------------------------------------------------+
+*/
+
 namespace Phalcon\Mailer;
 
 /**
@@ -62,7 +67,7 @@ class Message
      * Set the from address of this message.
      *
      * You may pass an array of addresses if this message is from multiple people.
-     * Example: array('receiver@domain.org', 'other@domain.org' => 'A name')
+     * Example: ['receiver@domain.org', 'other@domain.org' => 'A name']
      *
      * If $name is passed and the first parameter is a string, this name will be
      * associated with the address.
@@ -98,7 +103,7 @@ class Message
      * Set the reply-to address of this message.
      *
      * You may pass an array of addresses if replies will go to multiple people.
-     * Example: array('receiver@domain.org', 'other@domain.org' => 'A name')
+     * Example: ['receiver@domain.org', 'other@domain.org' => 'A name']
      *
      * If $name is passed and the first parameter is a string, this name will be
      * associated with the address.
@@ -134,7 +139,7 @@ class Message
      * Set the to addresses of this message.
      *
      * If multiple recipients will receive the message an array should be used.
-     * Example: array('receiver@domain.org', 'other@domain.org' => 'A name')
+     * Example: ['receiver@domain.org', 'other@domain.org' => 'A name']
      *
      * If $name is passed and the first parameter is a string, this name will be
      * associated with the address.
@@ -170,7 +175,7 @@ class Message
      * Set the Cc addresses of this message.
      *
      * If multiple recipients will receive the message an array should be used.
-     * Example: array('receiver@domain.org', 'other@domain.org' => 'A name')
+     * Example: ['receiver@domain.org', 'other@domain.org' => 'A name']
      *
      * If $name is passed and the first parameter is a string, this name will be
      * associated with the address.
@@ -206,7 +211,7 @@ class Message
      * Set the Bcc addresses of this message.
      *
      * If multiple recipients will receive the message an array should be used.
-     * Example: array('receiver@domain.org', 'other@domain.org' => 'A name')
+     * Example: ['receiver@domain.org', 'other@domain.org' => 'A name']
      *
      * If $name is passed and the first parameter is a string, this name will be
      * associated with the address.
@@ -528,7 +533,7 @@ class Message
      * @see Phalcon\Mailer\Message::createAttachmentViaPath()
      * @see Phalcon\Mailer\Message::prepareAttachment()
      */
-    public function attachment($file, Array $options = [])
+    public function attachment($file, array $options = [])
     {
         $attachment = $this->createAttachmentViaPath($file);
         return $this->prepareAttachment($attachment, $options);
@@ -546,7 +551,7 @@ class Message
      * @see Phalcon\Mailer\Message::createAttachmentViaData()
      * @see Phalcon\Mailer\Message::prepareAttachment()
      */
-    public function attachmentData($data, $name, Array $options = [])
+    public function attachmentData($data, $name, array $options = [])
     {
         $attachment = $this->createAttachmentViaData($data, $name);
         return $this->prepareAttachment($attachment, $options);
@@ -633,21 +638,19 @@ class Message
             $result = true;
         }
 
-        if ($result !== false) {
-
-            $this->failedRecipients = [];
-
-            $count = $this->getManager()->getSwift()->send($this->getMessage(), $this->failedRecipients);
-
-            if ($eventManager) {
-                $eventManager->fire('mailer:afterSend', $this, [$count, $this->failedRecipients]);
-            }
-
-            return $count;
-
-        } else {
+        if ($result === false) {
             return false;
         }
+
+        $this->failedRecipients = [];
+
+        $count = $this->getManager()->getSwift()->send($this->getMessage(), $this->failedRecipients);
+
+        if ($eventManager) {
+            $eventManager->fire('mailer:afterSend', $this, [$count, $this->failedRecipients]);
+        }
+
+        return $count;
     }
 
     /**
@@ -660,7 +663,7 @@ class Message
      *
      * @see \Swift_Message::attach()
      */
-    protected function prepareAttachment(\Swift_Attachment $attachment, Array $options = [])
+    protected function prepareAttachment(\Swift_Attachment $attachment, array $options = [])
     {
         if (isset($options['mime'])) {
             $attachment->setContentType($options['mime']);
@@ -701,7 +704,7 @@ class Message
     protected function createAttachmentViaPath($file)
     {
         /** @var $byteStream \Swift_ByteStream_FileByteStream */
-        $byteStream  = $this->getManager()->getDI()->get('\Swift_ByteStream_FileByteStream', [$file]);
+        $byteStream = $this->getManager()->getDI()->get('\Swift_ByteStream_FileByteStream', [$file]);
 
         /** @var $image \Swift_Attachment */
         $attachment = $this->getManager()->getDI()->get('\Swift_Attachment')
@@ -737,7 +740,7 @@ class Message
     protected function createEmbedViaPath($file)
     {
         /** @var $byteStream \Swift_ByteStream_FileByteStream */
-        $byteStream  = $this->getManager()->getDI()->get('\Swift_ByteStream_FileByteStream', [$file]);
+        $byteStream = $this->getManager()->getDI()->get('\Swift_ByteStream_FileByteStream', [$file]);
 
         /** @var $image \Swift_Image */
         $image = $this->getManager()->getDI()->get('\Swift_Image')
@@ -770,8 +773,7 @@ class Message
      */
     protected function normalizeEmail($email)
     {
-        if (is_array($email)) {
-
+        if (is_array($email) || $email instanceof \Traversable) {
             $emails = [];
 
             foreach ($email as $k => $v) {
@@ -784,7 +786,6 @@ class Message
             }
 
             return $emails;
-
         } else {
             return $this->getManager()->normalizeEmail($email);
         }

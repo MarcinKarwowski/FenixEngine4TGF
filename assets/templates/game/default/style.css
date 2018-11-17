@@ -910,6 +910,26 @@ div.sceditor-toolbar {
     margin-top: 10px;
 }
 
+/* chat and lists */
+.chat_display_msg .chat_msg {
+    float: left;
+    width: 100%;
+}
+.chat_display_msg div.chat_msg:nth-child(even) {
+    background: #0F0F0F;
+    color: #5C4033;
+}
+.chat_msg .candel {
+    cursor: pointer;
+}
+.chat_msg .candel:hover {
+    color: #e7cf9f;
+}
+.chat-message {
+    color: #CDAA7D;
+    margin-bottom: 10px;
+}
+
 /* paginator */
 .pagination > li > a, .pagination > li > span {
     background-color: #000;

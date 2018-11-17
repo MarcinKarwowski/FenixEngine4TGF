@@ -327,7 +327,7 @@ return array(
                 //Attach a listener for type "view"
                 $eventsManager->attach("view", function ($event, $view) {
                     if ($event->getType() == 'notFoundView') {
-                        throw new Exception('View not found ' . $view->getActiveRenderPath());
+                        throw new Exception('View not found ' . join(', ', $view->getActiveRenderPath()));
                     }
                 });
 
@@ -359,7 +359,7 @@ return array(
                 return $view;
             },
             'parameters' => array(
-                'layoutsDir' => APPLICATION_PATH . '/templates/layouts/'
+                'layoutsDir' => APPLICATION_PATH . '/templates/'
             )
         ),
         'flash' => array(
@@ -390,6 +390,9 @@ return array(
         )
     ),
     'application' => array(
-        'modules' => include(APPLICATION_PATH . '/config/modules.php')
+        'modules' => include(APPLICATION_PATH . '/config/modules.php'),
+        'registerNamespaces' => [
+            'App' => BASE_PATH . '/library/'
+        ],
     ),
 );

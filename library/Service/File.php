@@ -51,6 +51,8 @@ class File extends \Phalcon\Mvc\User\Component
             }
         }
         if ($removeDir) rmdir($dirPath);
+
+        return true;
     }
 
     /**

@@ -12,6 +12,7 @@
 namespace Install\Controller;
 
 use App\Service\Config;
+use App\Service\File;
 use Main\Models\Chats;
 use Phalcon\Db\Adapter\Pdo\Mysql as Connection;
 use Main\Models\Users;
@@ -144,6 +145,9 @@ class IndexController extends ControllerBase
                 'last_msg_id' => 0,
                 'priv' => 1,
             ));
+
+            // Copy default template
+            File::copyDir(APPLICATION_PATH . '/templates/themes/default/_layouts', APPLICATION_PATH . '/templates/views/_layouts');
 
             // save new version to config
             Config::save([

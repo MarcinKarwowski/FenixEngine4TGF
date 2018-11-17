@@ -1,14 +1,22 @@
 <?php
-/**
- * Phalcon Framework
- * This source file is subject to the New BSD License that is bundled
- * with this package in the file docs/LICENSE.txt.
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@phalconphp.com so we can send you a copy immediately.
- *
- * @author Nikita Vershinin <endeveit@gmail.com>
- */
+
+/*
+  +------------------------------------------------------------------------+
+  | Phalcon Framework                                                      |
+  +------------------------------------------------------------------------+
+  | Copyright (c) 2011-2016 Phalcon Team (https://www.phalconphp.com)      |
+  +------------------------------------------------------------------------+
+  | This source file is subject to the New BSD License that is bundled     |
+  | with this package in the file LICENSE.txt.                             |
+  |                                                                        |
+  | If you did not receive a copy of the license and are unable to         |
+  | obtain it through the world-wide-web, please send an email             |
+  | to license@phalconphp.com so we can send you a copy immediately.       |
+  +------------------------------------------------------------------------+
+  | Authors: Nikita Vershinin <endeveit@gmail.com>                         |
+  +------------------------------------------------------------------------+
+*/
+
 namespace Phalcon\Mvc\View\Engine\Twig;
 
 /**
@@ -18,7 +26,6 @@ namespace Phalcon\Mvc\View\Engine\Twig;
  */
 class CoreExtension extends \Twig_Extension
 {
-
     /**
      * {@inheritdoc}
      *
@@ -36,16 +43,24 @@ class CoreExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        $options = array(
+        $options = [
             'needs_environment' => true,
             'pre_escape'        => 'html',
-            'is_safe'           => array('html'),
-        );
+            'is_safe'           => ['html'],
+        ];
 
-        return array(
-            'assetsOutputCss' => new \Twig_Function_Method($this, 'functionAssetsOutputCss', $options),
-            'assetsOutputJs'  => new \Twig_Function_Method($this, 'functionAssetsOutputJs', $options),
-        );
+        return [
+            'assetsOutputCss' => new \Twig_SimpleFunction(
+                'assetsOutputCss',
+                [$this, 'functionAssetsOutputCss'],
+                $options
+            ),
+            'assetsOutputJs' => new \Twig_SimpleFunction(
+                'assetsOutputJs',
+                [$this, 'functionAssetsOutputJs'],
+                $options
+            )
+        ];
     }
 
     /**
@@ -79,9 +94,7 @@ class CoreExtension extends \Twig_Extension
      */
     public function getTokenParsers()
     {
-        return array(
-            new TokenParsers\Assets(),
-        );
+        return [new TokenParsers\Assets()];
     }
 
     /**

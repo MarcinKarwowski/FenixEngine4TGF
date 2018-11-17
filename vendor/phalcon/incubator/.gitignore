@@ -1,12 +1,14 @@
-.DS_Store
-.idea/*
-*.iml
-*.sublime-project
-*.sublime-workspace
+# Please do not use this ignore file to define platform specific files.
+#
+# For these purposes create a global .gitignore file, which is a list of rules
+# for ignoring files in every Git repository on your computer.
+#
+# https://help.github.com/articles/ignoring-files/#create-a-global-gitignore
+
 composer.lock
-composer.phar
-/nbproject/
-/vendor
-/codeception/acceptance/WebGuy.php
-/codeception/functional/TestGuy.php
-/codeception/unit/CodeGuy.php
+/vendor/
+codeception.yml
+tests/aerospike.suite.yml
+tests/unit.suite.5.yml
+tests/unit.suite.yml
+tests/unit5x.suite.yml

@@ -1,12 +1,13 @@
 <?php
+
 /*
   +------------------------------------------------------------------------+
   | Phalcon Framework                                                      |
   +------------------------------------------------------------------------+
-  | Copyright (c) 2011-2012 Phalcon Team (http://www.phalconphp.com)       |
+  | Copyright (c) 2011-2016 Phalcon Team (https://www.phalconphp.com)      |
   +------------------------------------------------------------------------+
   | This source file is subject to the New BSD License that is bundled     |
-  | with this package in the file docs/LICENSE.txt.                        |
+  | with this package in the file LICENSE.txt.                             |
   |                                                                        |
   | If you did not receive a copy of the license and are unable to         |
   | obtain it through the world-wide-web, please send an email             |
@@ -15,6 +16,7 @@
   | Author: Tuğrul Topuz <tugrultopuz@gmail.com>                           |
   +------------------------------------------------------------------------+
 */
+
 namespace Phalcon\Http\Client\Provider;
 
 use Phalcon\Http\Client\Exception as HttpException;
@@ -23,6 +25,7 @@ use Phalcon\Http\Client\Provider\Exception as ProviderException;
 use Phalcon\Http\Client\Request;
 use Phalcon\Http\Client\Response;
 use Phalcon\Http\Uri;
+use Phalcon\Http\Request\Method;
 
 class Stream extends Request
 {
@@ -53,12 +56,12 @@ class Stream extends Request
 
     private function initOptions()
     {
-        $this->setOptions(array(
+        $this->setOptions([
             'user_agent'      => 'Phalcon HTTP/' . self::VERSION . ' (Stream)',
             'follow_location' => 1,
             'max_redirects'   => 20,
             'timeout'         => 30
-        ));
+        ]);
     }
 
     public function setOption($option, $value)
@@ -68,7 +71,7 @@ class Stream extends Request
 
     public function setOptions($options)
     {
-        return stream_context_set_option($this->context, array('http' => $options));
+        return stream_context_set_option($this->context, ['http' => $options]);
     }
 
     public function setTimeout($timeout)
@@ -81,13 +84,13 @@ class Stream extends Request
         throw new HttpException($errstr, $errno);
     }
 
-    private function send($uri)
+    protected function send($uri)
     {
         if (count($this->header) > 0) {
             $this->setOption('header', $this->header->build(Header::BUILD_FIELDS));
         }
 
-        set_error_handler(array($this, 'errorHandler'));
+        set_error_handler([$this, 'errorHandler']);
         $content = file_get_contents($uri->build(), false, $this->context);
         restore_error_handler();
 
@@ -98,7 +101,7 @@ class Stream extends Request
         return $response;
     }
 
-    private function initPostFields($params)
+    protected function initPostFields($params)
     {
         if (!empty($params) && is_array($params)) {
             $this->header->set('Content-Type', 'application/x-www-form-urlencoded');
@@ -108,11 +111,11 @@ class Stream extends Request
 
     public function setProxy($host, $port = 8080, $user = null, $pass = null)
     {
-        $uri = new Uri(array(
+        $uri = new Uri([
             'scheme' => 'tcp',
             'host'   => $host,
             'port'   => $port
-        ));
+        ]);
 
         if (!empty($user)) {
             $uri->user = $user;
@@ -124,7 +127,7 @@ class Stream extends Request
         $this->setOption('proxy', $uri->build());
     }
 
-    public function get($uri, $params = array())
+    public function get($uri, $params = [])
     {
         $uri = $this->resolveUri($uri);
 
@@ -132,17 +135,17 @@ class Stream extends Request
             $uri->extendQuery($params);
         }
 
-        $this->setOptions(array(
-            'method'  => 'GET',
+        $this->setOptions([
+            'method'  => Method::GET,
             'content' => ''
-        ));
+        ]);
 
         $this->header->remove('Content-Type');
 
         return $this->send($uri);
     }
 
-    public function head($uri, $params = array())
+    public function head($uri, $params = [])
     {
         $uri = $this->resolveUri($uri);
 
@@ -150,17 +153,17 @@ class Stream extends Request
             $uri->extendQuery($params);
         }
 
-        $this->setOptions(array(
-            'method'  => 'HEAD',
+        $this->setOptions([
+            'method'  => Method::HEAD,
             'content' => ''
-        ));
+        ]);
 
         $this->header->remove('Content-Type');
 
         return $this->send($uri);
     }
 
-    public function delete($uri, $params = array())
+    public function delete($uri, $params = [])
     {
         $uri = $this->resolveUri($uri);
 
@@ -168,28 +171,37 @@ class Stream extends Request
             $uri->extendQuery($params);
         }
 
-        $this->setOptions(array(
-            'method'  => 'DELETE',
+        $this->setOptions([
+            'method'  => Method::DELETE,
             'content' => ''
-        ));
+        ]);
 
         $this->header->remove('Content-Type');
 
         return $this->send($uri);
     }
 
-    public function post($uri, $params = array())
+    public function post($uri, $params = [])
     {
-        $this->setOption('method', 'POST');
+        $this->setOption('method', Method::POST);
 
         $this->initPostFields($params);
 
         return $this->send($this->resolveUri($uri));
     }
 
-    public function put($uri, $params = array())
+    public function put($uri, $params = [])
     {
-        $this->setOption('method', 'PUT');
+        $this->setOption('method', Method::PUT);
+
+        $this->initPostFields($params);
+
+        return $this->send($this->resolveUri($uri));
+    }
+
+    public function patch($uri, $params = [])
+    {
+        $this->setOption('method', Method::PATCH);
 
         $this->initPostFields($params);
 

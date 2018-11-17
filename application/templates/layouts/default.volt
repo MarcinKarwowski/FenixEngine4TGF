@@ -1,1 +1,0 @@
-Szablon podstawowy

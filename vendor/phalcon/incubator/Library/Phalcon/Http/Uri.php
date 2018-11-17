@@ -1,12 +1,13 @@
 <?php
+
 /*
   +------------------------------------------------------------------------+
   | Phalcon Framework                                                      |
   +------------------------------------------------------------------------+
-  | Copyright (c) 2011-2012 Phalcon Team (http://www.phalconphp.com)       |
+  | Copyright (c) 2011-2016 Phalcon Team (https://www.phalconphp.com)      |
   +------------------------------------------------------------------------+
   | This source file is subject to the New BSD License that is bundled     |
-  | with this package in the file docs/LICENSE.txt.                        |
+  | with this package in the file LICENSE.txt.                             |
   |                                                                        |
   | If you did not receive a copy of the license and are unable to         |
   | obtain it through the world-wide-web, please send an email             |
@@ -15,11 +16,12 @@
   | Author: Tuğrul Topuz <tugrultopuz@gmail.com>                           |
   +------------------------------------------------------------------------+
 */
+
 namespace Phalcon\Http;
 
 class Uri
 {
-    private $parts = array();
+    private $parts = [];
 
     public function __construct($uri = null)
     {
@@ -30,7 +32,7 @@ class Uri
         if (is_string($uri)) {
             $this->parts = parse_url($uri);
             if (!empty($this->parts['query'])) {
-                $query = array();
+                $query = [];
                 parse_str($this->parts['query'], $query);
                 $this->parts['query'] = $query;
             }
@@ -49,7 +51,6 @@ class Uri
 
             return;
         }
-
     }
 
     public function __toString()
@@ -108,7 +109,7 @@ class Uri
         }
 
         if (!empty($parts['query'])) {
-            $uri .= '?' . (is_array($parts['query']) ? http_build_query($parts['query']) : $parts['query']);
+            $uri .= '?' . $this->buildQuery($parts['query']);
         }
 
         if (!empty($parts['fragment'])) {
@@ -116,6 +117,11 @@ class Uri
         }
 
         return $uri;
+    }
+
+    public function buildQuery($query)
+    {
+        return (is_array($query) ? http_build_query($query) : $query);
     }
 
     public function resolve($uri)
@@ -134,7 +140,7 @@ class Uri
 
         $this->parts = array_merge(
             $this->parts,
-            array_diff_key($uri->parts, array_flip(array('query', 'path')))
+            array_diff_key($uri->parts, array_flip(['query', 'path']))
         );
 
         if (!empty($uri->parts['query'])) {
@@ -150,8 +156,8 @@ class Uri
 
     public function extendQuery($params)
     {
-        $query = empty($this->parts['query']) ? array() : $this->parts['query'];
-        $params = empty($params) ? array() : $params;
+        $query = empty($this->parts['query']) ? [] : $this->parts['query'];
+        $params = empty($params) ? [] : $params;
         $this->parts['query'] = array_merge($query, $params);
 
         return $this;
