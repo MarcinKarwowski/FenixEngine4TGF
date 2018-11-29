@@ -136,6 +136,10 @@ class IndexController extends ControllerBase
         putenv('COMPOSER_HOME=' . __DIR__ . '/../composer');
         chdir(BASE_PATH . '/');
 
+        if (file_exists(BASE_PATH . '/composer.lock')) {
+            unlink(BASE_PATH . '/composer.lock');
+        }
+
         // Setup composer output formatter
         $stream = fopen('php://temp', 'w+');
         $output = new StreamOutput($stream);
@@ -143,10 +147,6 @@ class IndexController extends ControllerBase
         $application = new Application();
         $application->setAutoExit(false);
         $application->run(new ArrayInput(array('command' => 'install')), $output);
-
-        if (file_exists(BASE_PATH . '/composer.lock')) {
-            unlink(BASE_PATH . '/composer.lock');
-        }
 
         rewind($stream);
 
@@ -214,7 +214,12 @@ class IndexController extends ControllerBase
             $this->db->query($query['make']);
         }
 
+        // remove Update vendor becouse we run composer on our own
+        File::delete(APPLICATION_PATH . '/update/FenixEngine4TGF-master/vendor', true);
+
+        // Copy new files
         File::copyDir(APPLICATION_PATH . '/update/FenixEngine4TGF-master', BASE_PATH);
+        // Remove update folder
         File::delete(APPLICATION_PATH . '/update/FenixEngine4TGF-master/', true);
 
         if (!is_dir(APPLICATION_PATH.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'_layouts')) {
