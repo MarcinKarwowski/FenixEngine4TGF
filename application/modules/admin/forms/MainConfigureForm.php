@@ -43,14 +43,9 @@ class MainConfigureForm extends Form
         $this->add($description);
 
         // counter template
-        $description = new Text('starttime');
-        $description->setLabel($this -> translate['configuration-game_timetostart']);
-        $description->addValidators(array(
-            new PresenceOf(array(
-                'message' => $this -> translate['form-field_required']
-            ))
-        ));
-        $this->add($description);
+        $starttime = new Text('starttime');
+        $starttime->setLabel($this -> translate['configuration-game_timetostart']);
+        $this->add($starttime);
 
         // Game keywords
         $keywords = new Text('keywords');
@@ -76,9 +71,9 @@ class MainConfigureForm extends Form
         $this->add($publicUrl);
 
         // register is off/on
-        $registerOff = new Select("registeroff", array('true' => $this -> translate['yes'], 'false' => $this -> translate['no']), array(
+        $registerOff = new Select("registerOff", array(1 => $this -> translate['yes'], 0 => $this -> translate['no']), array(
             'using' => array('id', 'name'),
-            'value' => ($this -> config -> game -> registerOff ? 'true' : 'false')
+            'value' => ($this -> config -> game -> registerOff ? 1 : 0)
         ));
         $registerOff->setLabel($this -> translate['configuration-register_off']);
         $registerOff->addValidators(array(
@@ -177,10 +172,11 @@ class MainConfigureForm extends Form
      * Show rendered form field html
      * @param $name
      */
-    public function renderDecorated($name, $attributes = null)
+    public function renderDecorated($name, $attributes = false)
     {
         $element  = $this->get($name);
-        $element->setAttributes($attributes);
+        $currentAttributes = $element->getAttributes() + ($attributes ? $attributes : []);
+        $element->setAttributes($currentAttributes);
         $element->setAttribute('aria-describedby', 'form-'.$element->getName());
 
         // Get any generated messages for the current element
