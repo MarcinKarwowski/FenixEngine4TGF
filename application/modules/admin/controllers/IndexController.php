@@ -214,9 +214,6 @@ class IndexController extends ControllerBase
             $this->db->query($query['make']);
         }
 
-        // remove Update vendor becouse we run composer on our own
-        File::delete(APPLICATION_PATH . '/update/FenixEngine4TGF-master/vendor', true);
-
         // Copy new files
         File::copyDir(APPLICATION_PATH . '/update/FenixEngine4TGF-master', BASE_PATH);
         // Remove update folder
