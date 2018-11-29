@@ -8,7 +8,7 @@
     ],
     "require": {
         "phalcon/incubator": "3.4.*",
-        "composer/composer": "dev-master",
+        "composer/composer": "1.6.*",
         "ovr/phalcony": "0.2.*",
         "swiftmailer/swiftmailer": "5.4.*"
     }

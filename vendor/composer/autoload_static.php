@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInite94e3cd841e4e87ca04f9d41ee2bccf9
+class ComposerStaticInit84e01e88339ad476383f8baccba5d6a3
 {
     public static $files = array (
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
@@ -23,6 +23,7 @@ class ComposerStaticInite94e3cd841e4e87ca04f9d41ee2bccf9
             'Symfony\\Component\\Console\\' => 26,
             'Seld\\PharUtils\\' => 15,
             'Seld\\JsonLint\\' => 14,
+            'Seld\\CliPrompt\\' => 15,
         ),
         'P' => 
         array (
@@ -36,7 +37,6 @@ class ComposerStaticInite94e3cd841e4e87ca04f9d41ee2bccf9
         ),
         'C' => 
         array (
-            'Composer\\XdebugHandler\\' => 23,
             'Composer\\Spdx\\' => 14,
             'Composer\\Semver\\' => 16,
             'Composer\\CaBundle\\' => 18,
@@ -77,6 +77,10 @@ class ComposerStaticInite94e3cd841e4e87ca04f9d41ee2bccf9
         array (
             0 => __DIR__ . '/..' . '/seld/jsonlint/src/Seld/JsonLint',
         ),
+        'Seld\\CliPrompt\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/seld/cli-prompt/src',
+        ),
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
@@ -92,10 +96,6 @@ class ComposerStaticInite94e3cd841e4e87ca04f9d41ee2bccf9
         'JsonSchema\\' => 
         array (
             0 => __DIR__ . '/..' . '/justinrainbow/json-schema/src/JsonSchema',
-        ),
-        'Composer\\XdebugHandler\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/composer/xdebug-handler/src',
         ),
         'Composer\\Spdx\\' => 
         array (
@@ -118,8 +118,8 @@ class ComposerStaticInite94e3cd841e4e87ca04f9d41ee2bccf9
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInite94e3cd841e4e87ca04f9d41ee2bccf9::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInite94e3cd841e4e87ca04f9d41ee2bccf9::$prefixDirsPsr4;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit84e01e88339ad476383f8baccba5d6a3::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit84e01e88339ad476383f8baccba5d6a3::$prefixDirsPsr4;
 
         }, null, ClassLoader::class);
     }
