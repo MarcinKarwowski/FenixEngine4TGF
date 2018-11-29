@@ -9,7 +9,7 @@
     {{ forms.get('mainconfigure').renderDecorated('starttime', ['value': date('d-m-y', config.game.startTime), 'data-mask': '', 'data-inputmask': "'alias': 'dd-mm-yyyy'", 'maxlength': 25, 'class': 'form-control', 'placeholder': t['configuration-game_timetostart']]) }}
     {{ forms.get('mainconfigure').renderDecorated('keywords', ['value': config.game.keywords, 'maxlength': 100, 'class': 'form-control']) }}
     {{ forms.get('mainconfigure').renderDecorated('url', ['value': config.game.baseUri, 'class': 'form-control', 'maxlength': 50]) }}
-    {{ forms.get('mainconfigure').renderDecorated('registeroff', ['value': config.game.registerOff, 'class': 'form-control']) }}
+    {{ forms.get('mainconfigure').renderDecorated('registerOff', ['value': config.game.registerOff, 'class': 'form-control']) }}
     {{ forms.get('mainconfigure').renderDecorated('ga', ['value': config.game.GAIdentificator, 'class': 'form-control', 'maxlength': 50]) }}
      <h3>{{ t['configuration-emailconf'] }}</h3>
     {{ forms.get('mainconfigure').renderDecorated('emailName', ['value': config.mail.fromName, 'class': 'form-control', 'maxlength': 50]) }}

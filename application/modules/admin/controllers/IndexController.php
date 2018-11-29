@@ -93,7 +93,7 @@ class IndexController extends ControllerBase
                         'keywords' => $this->request->getPost('keywords'),
                         'publicUrl' => $arrUrl['host'],
                         'baseUri' => (!in_array($arrUrl['scheme'], array('https', 'http')) ? 'http' : $arrUrl['scheme']) . '://' . $arrUrl['host'] . '/',
-                        'registerOff' => ($this->request->getPost('registeroff') == 'true' ? true : false),
+                        'registerOff' => boolval($this->request->getPost('registerOff')),
                         'GAIdentificator' => $this->request->getPost('ga'),
                     ),
                         'mail' => array(
@@ -224,6 +224,8 @@ class IndexController extends ControllerBase
         if (!is_file(APPLICATION_PATH.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'_layouts'.DIRECTORY_SEPARATOR.'mainpage.volt')) {
             File::copyDir(APPLICATION_PATH . '/templates/themes/default/_layouts', APPLICATION_PATH . '/templates/views/_layouts');
         }
+        // Update main template files
+        File::copyDir(APPLICATION_PATH . '/templates/themes/'.$this->config->game->template.'/_layouts', APPLICATION_PATH . '/templates/views/_layouts');
 
         Config::save(
             array('game' => array('engineVer' => trim(file_get_contents('https://raw.githubusercontent.com/ThoranRion/FenixEngine4TGF/master/VERSION.md'.'?'.mt_rand()))))
