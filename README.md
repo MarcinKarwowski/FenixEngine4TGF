@@ -19,4 +19,4 @@ Silnik do działania wymaga:
 
 ### Miejsce gdzie można wgrać własne grafiki
 
-(Galeria)[http://tgfimage.rocks/]
+[Galeria](http://tgfimage.rocks/)
